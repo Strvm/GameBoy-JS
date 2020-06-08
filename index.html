@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameBoy</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="">
+    <link rel="icon" type="images/png" href="./images/mario_favicon.ico" />
+
+</head>
+<body>
+<link href='https://fonts.googleapis.com/css?family=Roboto:100,400,300,500,700' rel='stylesheet' type='text/css'>
+<div class="background"></div>
+
+<div id="gameboy_shell">
+    <div id="game">
+        <canvas id="mainCanvas" width="160" height="144">No Canvas Support</canvas>
+    </div>
+    <div id="controller">
+        <div id="controller_dpad">
+            <div id="controller_left"></div>
+            <div id="controller_right"></div>
+            <div id="controller_up"></div>
+            <div id="controller_down"></div>
+        </div>
+        <div id="controller_select" class="capsuleBtn">Select</div>
+        <div id="controller_start" class="capsuleBtn">Start</div>
+        <div id="controller_b" class="roundBtn">B</div>
+        <div id="controller_a" class="roundBtn">A</div>
+    </div>
+</div>
+
+<img src="images/settings.png" alt="Settings button" class="settingsButton">
+<div class="settings">
+    <img class="logo" src="images/logo.png" alt="Logo of the GameBoy loading screen.">
+    <div class="controls">
+        <label>A<input type="text" name="JS_KEY_A" class="menuInput A_Button"></label>
+        <label>B<input type="text" name="JS_KEY_B" class="menuInput B_Button"></label>
+        <label>Start<input type="text" name="JS_KEY_ENTER" class="menuInput Start_Button"></label>
+        <label>Select<input type="text" name="JS_KEY_SHIFT" class="menuInput Select_Button"></label>
+        <label>Up<input type="text" name="JS_KEY_UP" class="menuInput Up_Button"></label>
+        <label>Right<input type="text" name="JS_KEY_RIGHT" class="menuInput Right_Button"></label>
+        <label>Down<input type="text" name="JS_KEY_DOWN" class="menuInput Down_Button"></label>
+        <label>Left<input type="text" name="JS_KEY_LEFT" class="menuInput Left_Button"> </label>
+        <label>FPS<input type="checkbox" class="FPS" checked></label>
+    </div>
+    <div class="closeMenu">X</div>
+    <label>Background Movement<input type="checkbox" class="movingBg" checked></label>
+    <label>Background Objects<input type="checkbox" class="bgObjects" checked></label>
+    <input class='backgroundChanger' type='file'/>
+</div>
+
+
+
+
+
+
+<script src="./scripts/GameBoy-Online/js/other/mobile.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/base64.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/swfobject.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/resampler.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/XAudioServer.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/controls.js"></script>
+<script src="./scripts/GameBoy-Online/js/other/resize.js"></script>
+<script src="./scripts/GameBoy-Online/js/GameBoyCore.js"></script>
+<script src="./scripts/GameBoy-Online/js/GameBoyIO.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+<script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="https://rawcdn.githack.com/mrdoob/three.js/d9f87fb1a2c5db1ea0e2feda9bd42b39b5bedc41/examples/js/loaders/DRACOLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/loaders/GLTFLoader.js"></script>
+<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+<script src="./scripts/script.js"></script>
+<script src="./scripts/menu.js"></script>
+<script src="./scripts/konami.js"></script>
+
+</body>
+</html>
