@@ -11,25 +11,6 @@
 </head>
 <body>
 <link href='https://fonts.googleapis.com/css?family=Roboto:100,400,300,500,700' rel='stylesheet' type='text/css'>
-<div class="background"></div>
-
-<div id="gameboy_shell">
-    <div id="game">
-        <canvas id="mainCanvas" width="160" height="144">No Canvas Support</canvas>
-    </div>
-    <div id="controller">
-        <div id="controller_dpad">
-            <div id="controller_left"></div>
-            <div id="controller_right"></div>
-            <div id="controller_up"></div>
-            <div id="controller_down"></div>
-        </div>
-        <div id="controller_select" class="capsuleBtn">Select</div>
-        <div id="controller_start" class="capsuleBtn">Start</div>
-        <div id="controller_b" class="roundBtn">B</div>
-        <div id="controller_a" class="roundBtn">A</div>
-    </div>
-</div>
 
 <img src="images/settings.png" alt="Settings button" class="settingsButton">
 <div class="settings">
@@ -56,15 +37,15 @@
 
 
 
-<script src="./scripts/GameBoy-Online/js/other/mobile.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/base64.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/swfobject.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/resampler.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/XAudioServer.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/controls.js"></script>
-<script src="./scripts/GameBoy-Online/js/other/resize.js"></script>
-<script src="./scripts/GameBoy-Online/js/GameBoyCore.js"></script>
-<script src="./scripts/GameBoy-Online/js/GameBoyIO.js"></script>
+<script src="./scripts/emulator/js/other/mobile.js"></script>
+<script src="./scripts/emulator/js/other/base64.js"></script>
+<script src="./scripts/emulator/js/other/swfobject.js"></script>
+<script src="./scripts/emulator/js/other/resampler.js"></script>
+<script src="./scripts/emulator/js/other/XAudioServer.js"></script>
+<script src="./scripts/emulator/js/other/controls.js"></script>
+
+<script src="./scripts/emulator/js/GameBoyCore.js"></script>
+<script src="./scripts/emulator/js/GameBoyIO.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
 <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
@@ -74,6 +55,6 @@
 <script src="./scripts/script.js"></script>
 <script src="./scripts/menu.js"></script>
 <script src="./scripts/konami.js"></script>
-
+<script src="./scripts/emulator/js/other/resize.js"></script>
 </body>
 </html>

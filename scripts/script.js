@@ -96,6 +96,7 @@ function init() {
             GameBoyMesh.height = mesh.height * 12;
             GameBoyMesh.position.y = -0.65;
             GameBoyMesh.position.z = 0.06;
+            console.log('ADDED GAMEBOYYY');
             scene.add( GameBoyMesh );
 
 
