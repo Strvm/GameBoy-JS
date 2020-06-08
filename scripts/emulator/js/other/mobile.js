@@ -1,4 +1,4 @@
-var romPath = "scripts/GameBoy-Online/rom/game.gb";
+var romPath = "scripts/emulator/rom/game.gb";
 var mainCanvas = null;
 var soundReady = false;
 
