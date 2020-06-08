@@ -24,6 +24,9 @@ const onMenuChange = (event) => {
         case 'bgObjects':
             backgroundObjects = !backgroundObjects;
             break;
+        case 'volumeControl':
+            volumeControl.gain.value = event.target.value;
+            break;
     }
 
 }

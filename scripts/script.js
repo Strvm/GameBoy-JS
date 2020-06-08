@@ -152,9 +152,9 @@ function init() {
                             if (screen[0].opacity  >= 1){
                                 clearInterval(intervalCartridge);
                                 spawnPoly('question', 20, 2000, questionBox, scene)
-                                // spawnPoly('goombat', 20, 5, goombat, scene)
-                                // spawnPoly('plant', 20, 30, plants, scene)
-                                // spawnPoly('brick', 20, 5, brick, scene)
+                                spawnPoly('goombat', 20, 5, goombat, scene)
+                                spawnPoly('plant', 20, 30, plants, scene)
+                                spawnPoly('brick', 20, 5, brick, scene)
                             }
                         }
 
@@ -240,7 +240,7 @@ const spawnPoly = (type, amount, scale, array, scene) => {
                 gltf.scene.scale.z = gltf.scene.scale.z / scale;
                 mesh = gltf.scene;
 
-                mesh.position.y = (Math.random() + 1 * (Math.random() + 1.2)) * 8;
+                mesh.position.y = (Math.random() + 1.4 * (Math.random() + 1.4)) * 8;
                 mesh.position.x = (Math.random() - 0.5) * 15;
                 mesh.position.z = ((Math.random() - 0.5) * 25);
                 if (mesh.position.z > -1 && mesh.position.z < 1) {

@@ -1,7 +1,7 @@
 var romPath = "scripts/emulator/rom/game.gb";
 var mainCanvas = null;
 var soundReady = false;
-
+let volumeControl;
 var cout = console.log.bind(console);
 function startGame(blob) {
   var binaryHandle = new FileReader();
@@ -78,6 +78,7 @@ function initSound() {
       var buffer = window.audioContext.createBuffer(1, 1, 22050);
       var source = window.audioContext.createBufferSource();
       source.buffer = buffer;
+
       // Connect to output (speakers)
       source.connect(window.audioContext.destination);
       // Play sound

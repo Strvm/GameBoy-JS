@@ -185,7 +185,8 @@ XAudioServer.prototype.initializeMozAudio = function () {
 XAudioServer.prototype.initializeWebAudio = function () {
 	if (!XAudioJSWebAudioLaunchedContext) {
         try {
-            XAudioJSWebAudioContextHandle = new AudioContext();								//Create a system audio context.
+            XAudioJSWebAudioContextHandle = new AudioContext();
+			volumeControl = XAudioJSWebAudioContextHandle.createGain();//Create a system audio context.
         }
         catch (error) {
             XAudioJSWebAudioContextHandle = new webkitAudioContext();							//Create a system audio context.
@@ -204,7 +205,7 @@ XAudioServer.prototype.initializeWebAudio = function () {
         XAudioJSWebAudioAudioNode = XAudioJSWebAudioContextHandle.createJavaScriptNode(XAudioJSSamplesPerCallback, 0, XAudioJSChannelsAllocated);	//Create the js event node.
     }
     XAudioJSWebAudioAudioNode.onaudioprocess = XAudioJSWebAudioEvent;																			//Connect the audio processing event to a handling function so we can manipulate output
-    XAudioJSWebAudioAudioNode.connect(XAudioJSWebAudioContextHandle.destination);																//Send and chain the output of the audio manipulation to the system audio output.
+    XAudioJSWebAudioAudioNode.connect(volumeControl).connect(XAudioJSWebAudioContextHandle.destination);																//Send and chain the output of the audio manipulation to the system audio output.
     this.resetCallbackAPIAudioBuffer(XAudioJSWebAudioContextHandle.sampleRate);
     this.audioType = 1;
     /*
