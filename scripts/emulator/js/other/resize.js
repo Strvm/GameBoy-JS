@@ -1,9 +1,10 @@
-var canvas = screenCanvas;
+const canvas = screenCanvas;
+
 function bindResize() {
-  var gameRatio = 128 / 128;
+  const gameRatio = 128 / 128;
 
   function onResize() {
-    var windowRatio = window.innerWidth / window.innerHeight;
+    const windowRatio = window.innerWidth / window.innerHeight;
     if (windowRatio < gameRatio) {
       canvas.style.width = window.innerWidth + "px";
       canvas.style.height = "auto";

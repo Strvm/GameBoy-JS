@@ -1,10 +1,11 @@
-var romPath = "scripts/emulator/rom/game.gb";
-var mainCanvas = null;
-var soundReady = false;
+let romPath = "scripts/emulator/rom/game.gb";
+let mainCanvas = null;
+let soundReady = false;
 let volumeControl;
-var cout = console.log.bind(console);
+const cout = console.log.bind(console);
+
 function startGame(blob) {
-  var binaryHandle = new FileReader();
+  const binaryHandle = new FileReader();
   binaryHandle.onload = function() {
     if (this.readyState === 2) {
       try {
@@ -18,7 +19,7 @@ function startGame(blob) {
 }
 
 function loadViaXHR() {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open("GET", romPath);
   xhr.responseType = "blob";
   xhr.onload = function() {
@@ -34,7 +35,7 @@ function windowingInitialize() {
   loadViaXHR();
 }
 
-//Wrapper for localStorage getItem, so that data can be retrieved in various types.
+//Wrapper for localStorage getItem, so that data can be retrieved in constious types.
 function findValue(key) {
   try {
     if (window.localStorage.getItem(key) != null) {
@@ -48,7 +49,7 @@ function findValue(key) {
   }
   return null;
 }
-//Wrapper for localStorage setItem, so that data can be set in various types.
+//Wrapper for localStorage setItem, so that data can be set in constious types.
 function setValue(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
@@ -57,7 +58,7 @@ function setValue(key, value) {
     window.globalStorage[location.hostname].setItem(key, JSON.stringify(value));
   }
 }
-//Wrapper for localStorage removeItem, so that data can be set in various types.
+//Wrapper for localStorage removeItem, so that data can be set in constious types.
 function deleteValue(key) {
   try {
     window.localStorage.removeItem(key);
@@ -75,8 +76,8 @@ function initSound() {
     window.audioContext = new AudioContext();
     if (window.audioContext) {
       // Create empty buffer
-      var buffer = window.audioContext.createBuffer(1, 1, 22050);
-      var source = window.audioContext.createBufferSource();
+      const buffer = window.audioContext.createBuffer(1, 1, 22050);
+      const source = window.audioContext.createBufferSource();
       source.buffer = buffer;
 
       // Connect to output (speakers)

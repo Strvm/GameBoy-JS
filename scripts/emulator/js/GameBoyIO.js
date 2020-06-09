@@ -1,7 +1,7 @@
 "use strict";
-var gameboy = null;						//GameBoyCore object.
-var gbRunInterval = null;				//GameBoyCore Timer
-var settings = [						//Some settings.
+let gameboy = null;						//GameBoyCore object.
+let gbRunInterval = null;				//GameBoyCore Timer
+const settings = [						//Some settings.
 	false, 								//Turn on sound.
 	true,								//Boot with boot ROM first?
 	false,								//Give priority to GameBoy mode
@@ -16,8 +16,9 @@ var settings = [						//Some settings.
 	false,								//Use the GameBoy boot ROM instead of the GameBoy Color boot ROM.
 	false,								//Scale the canvas in JS, or let the browser scale the canvas?
 	true,								//Use image smoothing based scaling?
-    [true, true, true, true]            //User controlled channel enables.
+	[true, true, true, true]            //User controlled channel enables.
 ];
+
 function start(canvas, ROM) {
 	clearLastEmulation();
 	autoSave();	//If we are about to load a new game, then save the last one...
@@ -32,7 +33,7 @@ function run() {
 		if (!GameBoyEmulatorPlaying()) {
 			gameboy.stopEmulator &= 1;
 			cout("Starting the iterator.", 0);
-			var dateObj = new Date();
+			const dateObj = new Date();
 			gameboy.firstIteration = dateObj.getTime();
 			gameboy.iterations = 0;
 			gbRunInterval = setInterval(function () {
@@ -75,7 +76,7 @@ function clearLastEmulation() {
 }
 function save() {
 	if (GameBoyEmulatorInitialized()) {
-		var state_suffix = 0;
+		let state_suffix = 0;
 		while (findValue("FREEZE_" + gameboy.name + "_" + state_suffix) != null) {
 			state_suffix++;
 		}
@@ -89,7 +90,7 @@ function saveSRAM() {
 	if (GameBoyEmulatorInitialized()) {
 		if (gameboy.cBATT) {
 			try {
-				var sram = gameboy.saveSRAMState();
+				const sram = gameboy.saveSRAMState();
 				if (sram.length > 0) {
 					cout("Saving the SRAM...", 0);
 					if (findValue("SRAM_" + gameboy.name) != null) {
@@ -214,7 +215,7 @@ function import_save(blobData) {
 	blobData = decodeBlob(blobData);
 	if (blobData && blobData.blobs) {
 		if (blobData.blobs.length > 0) {
-			for (var index = 0; index < blobData.blobs.length; ++index) {
+			for (let index = 0; index < blobData.blobs.length; ++index) {
 				cout("Importing blob \"" + blobData.blobs[index].blobID + "\"", 0);
 				if (blobData.blobs[index].blobContent) {
 					if (blobData.blobs[index].blobID.substring(0, 5) == "SRAM_") {
@@ -242,10 +243,10 @@ function import_save(blobData) {
 }
 function generateBlob(keyName, encodedData) {
 	//Append the file format prefix:
-	var saveString = "EMULATOR_DATA";
-	var consoleID = "GameBoy";
+	let saveString = "EMULATOR_DATA";
+	const consoleID = "GameBoy";
 	//Figure out the length:
-	var totalLength = (saveString.length + 4 + (1 + consoleID.length)) + ((1 + keyName.length) + (4 + encodedData.length));
+	const totalLength = (saveString.length + 4 + (1 + consoleID.length)) + ((1 + keyName.length) + (4 + encodedData.length));
 	//Append the total length in bytes:
 	saveString += to_little_endian_dword(totalLength);
 	//Append the console ID text's length:
@@ -261,17 +262,17 @@ function generateBlob(keyName, encodedData) {
 	return saveString;
 }
 function generateMultiBlob(blobPairs) {
-	var consoleID = "GameBoy";
+	const consoleID = "GameBoy";
 	//Figure out the initial length:
-	var totalLength = 13 + 4 + 1 + consoleID.length;
+	let totalLength = 13 + 4 + 1 + consoleID.length;
 	//Append the console ID text's length:
-	var saveString = to_byte(consoleID.length);
+	let saveString = to_byte(consoleID.length);
 	//Append the console ID text:
 	saveString += consoleID;
-	var keyName = "";
-	var encodedData = "";
+	let keyName = "";
+	let encodedData = "";
 	//Now append all the blobs:
-	for (var index = 0; index < blobPairs.length; ++index) {
+	for (let index = 0; index < blobPairs.length; ++index) {
 		keyName = blobPairs[index][0];
 		encodedData = blobPairs[index][1];
 		//Append the blob ID:
@@ -301,19 +302,19 @@ function decodeBlob(blobData) {
 		}
 	*/
 	var length = blobData.length;
-	var blobProperties = {};
+	const blobProperties = {};
 	blobProperties.consoleID = null;
-	var blobsCount = -1;
+	let blobsCount = -1;
 	blobProperties.blobs = [];
 	if (length > 17) {
 		if (blobData.substring(0, 13) == "EMULATOR_DATA") {
 			var length = Math.min(((blobData.charCodeAt(16) & 0xFF) << 24) | ((blobData.charCodeAt(15) & 0xFF) << 16) | ((blobData.charCodeAt(14) & 0xFF) << 8) | (blobData.charCodeAt(13) & 0xFF), length);
-			var consoleIDLength = blobData.charCodeAt(17) & 0xFF;
+			const consoleIDLength = blobData.charCodeAt(17) & 0xFF;
 			if (length > 17 + consoleIDLength) {
 				blobProperties.consoleID = blobData.substring(18, 18 + consoleIDLength);
-				var blobIDLength = 0;
-				var blobLength = 0;
-				for (var index = 18 + consoleIDLength; index < length;) {
+				let blobIDLength = 0;
+				let blobLength = 0;
+				for (let index = 18 + consoleIDLength; index < length;) {
 					blobIDLength = blobData.charCodeAt(index++) & 0xFF;
 					if (index + blobIDLength < length) {
 						blobProperties.blobs[++blobsCount] = {};
@@ -348,8 +349,8 @@ function decodeBlob(blobData) {
 }
 function matchKey(key) {	//Maps a keyboard key to a gameboy key.
 	//Order: Right, Left, Up, Down, A, B, Select, Start
-	var keymap = ["right", "left", "up", "down", "a", "b", "select", "start"];	//Keyboard button map.
-	for (var index = 0; index < keymap.length; index++) {
+	const keymap = ["right", "left", "up", "down", "a", "b", "select", "start"];	//Keyboard button map.
+	for (let index = 0; index < keymap.length; index++) {
 		if (keymap[index] == key) {
 			return index;
 		}

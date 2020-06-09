@@ -44,7 +44,7 @@ Resampler.prototype.initialize = function () {
 	}
 }
 Resampler.prototype.compileLinearInterpolationFunction = function () {
-	var toCompile = "var bufferLength = buffer.length;\
+    let toCompile = "var bufferLength = buffer.length;\
 	var outLength = this.outputBufferSize;\
 	if ((bufferLength % " + this.channels + ") == 0) {\
 		if (bufferLength > 0) {\
@@ -57,7 +57,7 @@ Resampler.prototype.compileLinearInterpolationFunction = function () {
 			for (; weight < 1; weight += " + this.ratioWeight + ") {\
 				secondWeight = weight % 1;\
 				firstWeight = 1 - secondWeight;";
-	for (var channel = 0; channel < this.channels; ++channel) {
+    for (var channel = 0; channel < this.channels; ++channel) {
 		toCompile += "outputBuffer[outputOffset++] = (this.lastOutput[" + channel + "] * firstWeight) + (buffer[" + channel + "] * secondWeight);";
 	}
 	toCompile += "}\
@@ -87,12 +87,12 @@ Resampler.prototype.compileLinearInterpolationFunction = function () {
 	this.resampler = Function("buffer", toCompile);
 }
 Resampler.prototype.compileMultiTapFunction = function () {
-	var toCompile = "var bufferLength = buffer.length;\
+    let toCompile = "var bufferLength = buffer.length;\
 	var outLength = this.outputBufferSize;\
 	if ((bufferLength % " + this.channels + ") == 0) {\
 		if (bufferLength > 0) {\
 			var weight = 0;";
-	for (var channel = 0; channel < this.channels; ++channel) {
+    for (var channel = 0; channel < this.channels; ++channel) {
 		toCompile += "var output" + channel + " = 0;"
 	}
 	toCompile += "var actualPosition = 0;\

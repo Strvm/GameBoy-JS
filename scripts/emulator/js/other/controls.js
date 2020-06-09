@@ -10,7 +10,7 @@ let JS_KEY_B = 'b';
 
 const DEADZONE = 0.1;
 
-var isTouchEnabled = "ontouchstart" in document.documentElement;
+let isTouchEnabled = "ontouchstart" in document.documentElement;
 isTouchEnabled = true;
 
 
@@ -39,19 +39,19 @@ function bindDpad(el) {
   el.addEventListener("touchstart", function(e) {
     e.preventDefault();
     e.stopPropagation();
-    var rect = e.currentTarget.getBoundingClientRect();
-    var x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
-    var y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
-    move(x, y);
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
+      const y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
+      move(x, y);
   });
 
   el.addEventListener("touchmove", function(e) {
     e.preventDefault();
     e.stopPropagation();
-    var rect = e.currentTarget.getBoundingClientRect();
-    var x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
-    var y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
-    move(x, y);
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
+      const y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
+      move(x, y);
   });
 
   function move(x, y) {

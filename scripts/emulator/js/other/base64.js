@@ -1,8 +1,9 @@
 "use strict";
-var toBase64 = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+const toBase64 = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+" , "/", "="];
-var fromBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "/", "="];
+const fromBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
 function base64(data) {
 	try {
 		var base64 = window.btoa(data);	//Use this native function when it's available, as it's a magnitude faster than the non-native code below.
@@ -10,11 +11,11 @@ function base64(data) {
 	catch (error) {
 		//Defaulting to non-native base64 encoding...
 		var base64 = "";
-		var dataLength = data.length;
+		const dataLength = data.length;
 		if (dataLength > 0) {
-			var bytes = [0, 0, 0];
-			var index = 0;
-			var remainder = dataLength % 3;
+			let bytes = [0, 0, 0];
+			let index = 0;
+			const remainder = dataLength % 3;
 			while (data.length % 3 > 0) {
 				//Make sure we don't do fuzzy math in the next loop...
 				data[data.length] = " ";
@@ -46,10 +47,10 @@ function base64_decode(data) {
 	catch (error) {
 		//Defaulting to non-native base64 decoding...
 		var decode64 = "";
-		var dataLength = data.length;
+		const dataLength = data.length;
 		if (dataLength > 3 && dataLength % 4 == 0) {
-			var sixbits = [0, 0, 0, 0];	//Declare this out of the loop, to speed up the ops.
-			var index = 0;
+			let sixbits = [0, 0, 0, 0];	//Declare this out of the loop, to speed up the ops.
+			let index = 0;
 			while (index < dataLength) {
 				//Keep this loop small for speed.
 				sixbits = [fromBase64.indexOf(data.charAt(index++)), fromBase64.indexOf(data.charAt(index++)), fromBase64.indexOf(data.charAt(index++)), fromBase64.indexOf(data.charAt(index++))];
@@ -76,9 +77,9 @@ function to_byte(str) {
 	return String.fromCharCode(str & 0xFF);
 }
 function arrayToBase64(arrayIn) {
-	var binString = "";
-	var length = arrayIn.length;
-	for (var index = 0; index < length; ++index) {
+	let binString = "";
+	const length = arrayIn.length;
+	for (let index = 0; index < length; ++index) {
 		if (typeof arrayIn[index] == "number") {
 			binString += String.fromCharCode(arrayIn[index]);
 		}
@@ -86,10 +87,10 @@ function arrayToBase64(arrayIn) {
 	return base64(binString);
 }
 function base64ToArray(b64String) {
-	var binString = base64_decode(b64String);
-	var outArray = [];
-	var length = binString.length;
-	for (var index = 0; index < length;) {
+	const binString = base64_decode(b64String);
+	const outArray = [];
+	const length = binString.length;
+	for (let index = 0; index < length;) {
 		outArray.push(binString.charCodeAt(index++) & 0xFF);
 	}
 	return outArray;

@@ -179,7 +179,7 @@ function GameBoyCore(canvas, ROMImage) {
 	this.serialShiftTimer = 0;			//Serial Transfer Shift Timer
 	this.serialShiftTimerAllocated = 0;	//Serial Transfer Shift Timer Refill
 	this.IRQEnableDelay = 0;			//Are the interrupts on queue to be enabled?
-	var dateVar = new Date();
+	let dateVar = new Date();
 	this.lastIteration = dateVar.getTime();//The last time we iterated the main loop.
 	dateVar = new Date();
 	this.firstIteration = dateVar.getTime();
@@ -312,7 +312,7 @@ GameBoyCore.prototype.OPCODE = [
 	//INC BC
 	//#0x03:
 	function (parentObj) {
-		var temp_var = ((parentObj.registerB << 8) | parentObj.registerC) + 1;
+		const temp_var = ((parentObj.registerB << 8) | parentObj.registerC) + 1;
 		parentObj.registerB = (temp_var >> 8) & 0xFF;
 		parentObj.registerC = temp_var & 0xFF;
 	},
@@ -348,7 +348,7 @@ GameBoyCore.prototype.OPCODE = [
 	//LD (nn), SP
 	//#0x08:
 	function (parentObj) {
-		var temp_var = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const temp_var = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 		parentObj.memoryWrite(temp_var, parentObj.stackPointer & 0xFF);
 		parentObj.memoryWrite((temp_var + 1) & 0xFFFF, parentObj.stackPointer >> 8);
@@ -356,7 +356,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD HL, BC
 	//#0x09:
 	function (parentObj) {
-		var dirtySum = parentObj.registersHL + ((parentObj.registerB << 8) | parentObj.registerC);
+		const dirtySum = parentObj.registersHL + ((parentObj.registerB << 8) | parentObj.registerC);
 		parentObj.FHalfCarry = ((parentObj.registersHL & 0xFFF) > (dirtySum & 0xFFF));
 		parentObj.FCarry = (dirtySum > 0xFFFF);
 		parentObj.registersHL = dirtySum & 0xFFFF;
@@ -370,7 +370,7 @@ GameBoyCore.prototype.OPCODE = [
 	//DEC BC
 	//#0x0B:
 	function (parentObj) {
-		var temp_var = (((parentObj.registerB << 8) | parentObj.registerC) - 1) & 0xFFFF;
+		const temp_var = (((parentObj.registerB << 8) | parentObj.registerC) - 1) & 0xFFFF;
 		parentObj.registerB = temp_var >> 8;
 		parentObj.registerC = temp_var & 0xFF;
 	},
@@ -443,7 +443,7 @@ GameBoyCore.prototype.OPCODE = [
 	//INC DE
 	//#0x13:
 	function (parentObj) {
-		var temp_var = ((parentObj.registerD << 8) | parentObj.registerE) + 1;
+		const temp_var = ((parentObj.registerD << 8) | parentObj.registerE) + 1;
 		parentObj.registerD = (temp_var >> 8) & 0xFF;
 		parentObj.registerE = temp_var & 0xFF;
 	},
@@ -472,7 +472,7 @@ GameBoyCore.prototype.OPCODE = [
 	//RLA
 	//#0x17:
 	function (parentObj) {
-		var carry_flag = (parentObj.FCarry) ? 1 : 0;
+		const carry_flag = (parentObj.FCarry) ? 1 : 0;
 		parentObj.FCarry = (parentObj.registerA > 0x7F);
 		parentObj.registerA = ((parentObj.registerA << 1) & 0xFF) | carry_flag;
 		parentObj.FZero = parentObj.FSubtract = parentObj.FHalfCarry = false;
@@ -485,7 +485,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD HL, DE
 	//#0x19:
 	function (parentObj) {
-		var dirtySum = parentObj.registersHL + ((parentObj.registerD << 8) | parentObj.registerE);
+		const dirtySum = parentObj.registersHL + ((parentObj.registerD << 8) | parentObj.registerE);
 		parentObj.FHalfCarry = ((parentObj.registersHL & 0xFFF) > (dirtySum & 0xFFF));
 		parentObj.FCarry = (dirtySum > 0xFFFF);
 		parentObj.registersHL = dirtySum & 0xFFFF;
@@ -499,7 +499,7 @@ GameBoyCore.prototype.OPCODE = [
 	//DEC DE
 	//#0x1B:
 	function (parentObj) {
-		var temp_var = (((parentObj.registerD << 8) | parentObj.registerE) - 1) & 0xFFFF;
+		const temp_var = (((parentObj.registerD << 8) | parentObj.registerE) - 1) & 0xFFFF;
 		parentObj.registerD = temp_var >> 8;
 		parentObj.registerE = temp_var & 0xFF;
 	},
@@ -528,7 +528,7 @@ GameBoyCore.prototype.OPCODE = [
 	//RRA
 	//#0x1F:
 	function (parentObj) {
-		var carry_flag = (parentObj.FCarry) ? 0x80 : 0;
+		const carry_flag = (parentObj.FCarry) ? 0x80 : 0;
 		parentObj.FCarry = ((parentObj.registerA & 1) == 1);
 		parentObj.registerA = (parentObj.registerA >> 1) | carry_flag;
 		parentObj.FZero = parentObj.FSubtract = parentObj.FHalfCarry = false;
@@ -564,7 +564,7 @@ GameBoyCore.prototype.OPCODE = [
 	//INC H
 	//#0x24:
 	function (parentObj) {
-		var H = ((parentObj.registersHL >> 8) + 1) & 0xFF;
+		const H = ((parentObj.registersHL >> 8) + 1) & 0xFF;
 		parentObj.FZero = (H == 0);
 		parentObj.FHalfCarry = ((H & 0xF) == 0);
 		parentObj.FSubtract = false;
@@ -573,7 +573,7 @@ GameBoyCore.prototype.OPCODE = [
 	//DEC H
 	//#0x25:
 	function (parentObj) {
-		var H = ((parentObj.registersHL >> 8) - 1) & 0xFF;
+		const H = ((parentObj.registersHL >> 8) - 1) & 0xFF;
 		parentObj.FZero = (H == 0);
 		parentObj.FHalfCarry = ((H & 0xF) == 0xF);
 		parentObj.FSubtract = true;
@@ -644,7 +644,7 @@ GameBoyCore.prototype.OPCODE = [
 	//INC L
 	//#0x2C:
 	function (parentObj) {
-		var L = (parentObj.registersHL + 1) & 0xFF;
+		const L = (parentObj.registersHL + 1) & 0xFF;
 		parentObj.FZero = (L == 0);
 		parentObj.FHalfCarry = ((L & 0xF) == 0);
 		parentObj.FSubtract = false;
@@ -653,7 +653,7 @@ GameBoyCore.prototype.OPCODE = [
 	//DEC L
 	//#0x2D:
 	function (parentObj) {
-		var L = (parentObj.registersHL - 1) & 0xFF;
+		const L = (parentObj.registersHL - 1) & 0xFF;
 		parentObj.FZero = (L == 0);
 		parentObj.FHalfCarry = ((L & 0xF) == 0xF);
 		parentObj.FSubtract = true;
@@ -702,7 +702,7 @@ GameBoyCore.prototype.OPCODE = [
 	//INC (HL)
 	//#0x34:
 	function (parentObj) {
-		var temp_var = (parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL) + 1) & 0xFF;
+		const temp_var = (parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL) + 1) & 0xFF;
 		parentObj.FZero = (temp_var == 0);
 		parentObj.FHalfCarry = ((temp_var & 0xF) == 0);
 		parentObj.FSubtract = false;
@@ -711,7 +711,7 @@ GameBoyCore.prototype.OPCODE = [
 	//DEC (HL)
 	//#0x35:
 	function (parentObj) {
-		var temp_var = (parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL) - 1) & 0xFF;
+		const temp_var = (parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL) - 1) & 0xFF;
 		parentObj.FZero = (temp_var == 0);
 		parentObj.FHalfCarry = ((temp_var & 0xF) == 0xF);
 		parentObj.FSubtract = true;
@@ -743,7 +743,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD HL, SP
 	//#0x39:
 	function (parentObj) {
-		var dirtySum = parentObj.registersHL + parentObj.stackPointer;
+		const dirtySum = parentObj.registersHL + parentObj.stackPointer;
 		parentObj.FHalfCarry = ((parentObj.registersHL & 0xFFF) > (dirtySum & 0xFFF));
 		parentObj.FCarry = (dirtySum > 0xFFFF);
 		parentObj.registersHL = dirtySum & 0xFFFF;
@@ -1125,7 +1125,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, B
 	//#0x80:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerB;
+		const dirtySum = parentObj.registerA + parentObj.registerB;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1135,7 +1135,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, C
 	//#0x81:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerC;
+		const dirtySum = parentObj.registerA + parentObj.registerC;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1145,7 +1145,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, D
 	//#0x82:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerD;
+		const dirtySum = parentObj.registerA + parentObj.registerD;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1155,7 +1155,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, E
 	//#0x83:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerE;
+		const dirtySum = parentObj.registerA + parentObj.registerE;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1165,7 +1165,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, H
 	//#0x84:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + (parentObj.registersHL >> 8);
+		const dirtySum = parentObj.registerA + (parentObj.registersHL >> 8);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1175,7 +1175,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, L
 	//#0x85:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + (parentObj.registersHL & 0xFF);
+		const dirtySum = parentObj.registerA + (parentObj.registersHL & 0xFF);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1185,7 +1185,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD A, (HL)
 	//#0x86:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const dirtySum = parentObj.registerA + parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1204,7 +1204,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, B
 	//#0x88:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerB + ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA + parentObj.registerB + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (parentObj.registerB & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1214,7 +1214,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, C
 	//#0x89:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerC + ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA + parentObj.registerC + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (parentObj.registerC & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1224,7 +1224,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, D
 	//#0x8A:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerD + ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA + parentObj.registerD + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (parentObj.registerD & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1234,7 +1234,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, E
 	//#0x8B:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.registerE + ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA + parentObj.registerE + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (parentObj.registerE & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1244,8 +1244,8 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, H
 	//#0x8C:
 	function (parentObj) {
-		var tempValue = (parentObj.registersHL >> 8);
-		var dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
+		const tempValue = (parentObj.registersHL >> 8);
+		const dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (tempValue & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1255,8 +1255,8 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, L
 	//#0x8D:
 	function (parentObj) {
-		var tempValue = (parentObj.registersHL & 0xFF);
-		var dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
+		const tempValue = (parentObj.registersHL & 0xFF);
+		const dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (tempValue & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1266,8 +1266,8 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, (HL)
 	//#0x8E:
 	function (parentObj) {
-		var tempValue = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
-		var dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
+		const tempValue = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (tempValue & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1278,7 +1278,7 @@ GameBoyCore.prototype.OPCODE = [
 	//#0x8F:
 	function (parentObj) {
 		//shift left register A one bit for some ops here as an optimization:
-		var dirtySum = (parentObj.registerA << 1) | ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = (parentObj.registerA << 1) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((((parentObj.registerA << 1) & 0x1E) | ((parentObj.FCarry) ? 1 : 0)) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1288,7 +1288,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, B
 	//#0x90:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerB;
+		const dirtySum = parentObj.registerA - parentObj.registerB;
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1298,7 +1298,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, C
 	//#0x91:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerC;
+		const dirtySum = parentObj.registerA - parentObj.registerC;
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1308,7 +1308,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, D
 	//#0x92:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerD;
+		const dirtySum = parentObj.registerA - parentObj.registerD;
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1318,7 +1318,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, E
 	//#0x93:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerE;
+		const dirtySum = parentObj.registerA - parentObj.registerE;
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1328,7 +1328,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, H
 	//#0x94:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - (parentObj.registersHL >> 8);
+		const dirtySum = parentObj.registerA - (parentObj.registersHL >> 8);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1338,7 +1338,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, L
 	//#0x95:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF);
+		const dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1348,7 +1348,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, (HL)
 	//#0x96:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1366,7 +1366,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, B
 	//#0x98:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerB - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - parentObj.registerB - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (parentObj.registerB & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1376,7 +1376,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, C
 	//#0x99:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerC - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - parentObj.registerC - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (parentObj.registerC & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1386,7 +1386,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, D
 	//#0x9A:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerD - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - parentObj.registerD - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (parentObj.registerD & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1396,7 +1396,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, E
 	//#0x9B:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerE - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - parentObj.registerE - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (parentObj.registerE & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1406,8 +1406,8 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, H
 	//#0x9C:
 	function (parentObj) {
-		var temp_var = parentObj.registersHL >> 8;
-		var dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
+		const temp_var = parentObj.registersHL >> 8;
+		const dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (temp_var & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1417,7 +1417,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, L
 	//#0x9D:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF) - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF) - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (parentObj.registersHL & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1427,8 +1427,8 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, (HL)
 	//#0x9E:
 	function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
-		var dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
+		const temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (temp_var & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1630,7 +1630,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP B
 	//#0xB8:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerB;
+		const dirtySum = parentObj.registerA - parentObj.registerB;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1639,7 +1639,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP C
 	//#0xB9:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerC;
+		const dirtySum = parentObj.registerA - parentObj.registerC;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1648,7 +1648,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP D
 	//#0xBA:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerD;
+		const dirtySum = parentObj.registerA - parentObj.registerD;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1657,7 +1657,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP E
 	//#0xBB:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.registerE;
+		const dirtySum = parentObj.registerA - parentObj.registerE;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1666,7 +1666,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP H
 	//#0xBC:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - (parentObj.registersHL >> 8);
+		const dirtySum = parentObj.registerA - (parentObj.registersHL >> 8);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1675,7 +1675,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP L
 	//#0xBD:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF);
+		const dirtySum = parentObj.registerA - (parentObj.registersHL & 0xFF);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1684,7 +1684,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP (HL)
 	//#0xBE:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.FZero = (dirtySum == 0);
@@ -1732,7 +1732,7 @@ GameBoyCore.prototype.OPCODE = [
 	//#0xC4:
 	function (parentObj) {
 		if (!parentObj.FZero) {
-			var temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+			const temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 			parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 			parentObj.stackPointer = (parentObj.stackPointer - 1) & 0xFFFF;
 			parentObj.memoryWriter[parentObj.stackPointer](parentObj, parentObj.stackPointer, parentObj.programCounter >> 8);
@@ -1756,7 +1756,7 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD, n
 	//#0xC6:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA + parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const dirtySum = parentObj.registerA + parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) < (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum > 0xFF);
@@ -1802,7 +1802,7 @@ GameBoyCore.prototype.OPCODE = [
 	//Secondary OP Code Set:
 	//#0xCB:
 	function (parentObj) {
-		var opcode = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const opcode = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		//Increment the program counter to the next instruction:
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
 		//Get how many CPU cycles the current 0xCBXX op code counts for:
@@ -1814,7 +1814,7 @@ GameBoyCore.prototype.OPCODE = [
 	//#0xCC:
 	function (parentObj) {
 		if (parentObj.FZero) {
-			var temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+			const temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 			parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 			parentObj.stackPointer = (parentObj.stackPointer - 1) & 0xFFFF;
 			parentObj.memoryWriter[parentObj.stackPointer](parentObj, parentObj.stackPointer, parentObj.programCounter >> 8);
@@ -1830,7 +1830,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CALL nn
 	//#0xCD:
 	function (parentObj) {
-		var temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 		parentObj.stackPointer = (parentObj.stackPointer - 1) & 0xFFFF;
 		parentObj.memoryWriter[parentObj.stackPointer](parentObj, parentObj.stackPointer, parentObj.programCounter >> 8);
@@ -1841,9 +1841,9 @@ GameBoyCore.prototype.OPCODE = [
 	//ADC A, n
 	//#0xCE:
 	function (parentObj) {
-		var tempValue = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const tempValue = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
-		var dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA + tempValue + ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) + (tempValue & 0xF) + ((parentObj.FCarry) ? 1 : 0) > 0xF);
 		parentObj.FCarry = (dirtySum > 0xFF);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -1896,7 +1896,7 @@ GameBoyCore.prototype.OPCODE = [
 	//#0xD4:
 	function (parentObj) {
 		if (!parentObj.FCarry) {
-			var temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+			const temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 			parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 			parentObj.stackPointer = (parentObj.stackPointer - 1) & 0xFFFF;
 			parentObj.memoryWriter[parentObj.stackPointer](parentObj, parentObj.stackPointer, parentObj.programCounter >> 8);
@@ -1920,7 +1920,7 @@ GameBoyCore.prototype.OPCODE = [
 	//SUB A, n
 	//#0xD6:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) < (dirtySum & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
@@ -1975,7 +1975,7 @@ GameBoyCore.prototype.OPCODE = [
 	//#0xDC:
 	function (parentObj) {
 		if (parentObj.FCarry) {
-			var temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+			const temp_pc = (parentObj.memoryRead((parentObj.programCounter + 1) & 0xFFFF) << 8) | parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 			parentObj.programCounter = (parentObj.programCounter + 2) & 0xFFFF;
 			parentObj.stackPointer = (parentObj.stackPointer - 1) & 0xFFFF;
 			parentObj.memoryWriter[parentObj.stackPointer](parentObj, parentObj.stackPointer, parentObj.programCounter >> 8);
@@ -1997,9 +1997,9 @@ GameBoyCore.prototype.OPCODE = [
 	//SBC A, n
 	//#0xDE:
 	function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const temp_var = parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
-		var dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
+		const dirtySum = parentObj.registerA - temp_var - ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FHalfCarry = ((parentObj.registerA & 0xF) - (temp_var & 0xF) - ((parentObj.FCarry) ? 1 : 0) < 0);
 		parentObj.FCarry = (dirtySum < 0);
 		parentObj.registerA = dirtySum & 0xFF;
@@ -2073,9 +2073,9 @@ GameBoyCore.prototype.OPCODE = [
 	//ADD SP, n
 	//#0xE8:
 	function (parentObj) {
-		var temp_value2 = (parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter) << 24) >> 24;
+		let temp_value2 = (parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter) << 24) >> 24;
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
-		var temp_value = (parentObj.stackPointer + temp_value2) & 0xFFFF;
+		const temp_value = (parentObj.stackPointer + temp_value2) & 0xFFFF;
 		temp_value2 = parentObj.stackPointer ^ temp_value2 ^ temp_value;
 		parentObj.stackPointer = temp_value;
 		parentObj.FCarry = ((temp_value2 & 0x100) == 0x100);
@@ -2137,7 +2137,7 @@ GameBoyCore.prototype.OPCODE = [
 	//POP AF
 	//#0xF1:
 	function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.stackPointer](parentObj, parentObj.stackPointer);
+		const temp_var = parentObj.memoryReader[parentObj.stackPointer](parentObj, parentObj.stackPointer);
 		parentObj.FZero = (temp_var > 0x7F);
 		parentObj.FSubtract = ((temp_var & 0x40) == 0x40);
 		parentObj.FHalfCarry = ((temp_var & 0x20) == 0x20);
@@ -2190,7 +2190,7 @@ GameBoyCore.prototype.OPCODE = [
 	//LDHL SP, n
 	//#0xF8:
 	function (parentObj) {
-		var temp_var = (parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter) << 24) >> 24;
+		let temp_var = (parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter) << 24) >> 24;
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
 		parentObj.registersHL = (parentObj.stackPointer + temp_var) & 0xFFFF;
 		temp_var = parentObj.stackPointer ^ temp_var ^ parentObj.registersHL;
@@ -2230,7 +2230,7 @@ GameBoyCore.prototype.OPCODE = [
 	//CP n
 	//#0xFE:
 	function (parentObj) {
-		var dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
+		const dirtySum = parentObj.registerA - parentObj.memoryReader[parentObj.programCounter](parentObj, parentObj.programCounter);
 		parentObj.programCounter = (parentObj.programCounter + 1) & 0xFFFF;
 		parentObj.FHalfCarry = ((dirtySum & 0xF) > (parentObj.registerA & 0xF));
 		parentObj.FCarry = (dirtySum < 0);
@@ -2299,7 +2299,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RLC (HL)
 	//#0x06:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FCarry = (temp_var > 0x7F);
 		temp_var = ((temp_var << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2365,7 +2365,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RRC (HL)
 	//#0x0E:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FCarry = ((temp_var & 0x01) == 0x01);
 		temp_var = ((parentObj.FCarry) ? 0x80 : 0) | (temp_var >> 1);
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2383,7 +2383,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL B
 	//#0x10:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registerB > 0x7F);
+		const newFCarry = (parentObj.registerB > 0x7F);
 		parentObj.registerB = ((parentObj.registerB << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2392,7 +2392,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL C
 	//#0x11:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registerC > 0x7F);
+		const newFCarry = (parentObj.registerC > 0x7F);
 		parentObj.registerC = ((parentObj.registerC << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2401,7 +2401,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL D
 	//#0x12:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registerD > 0x7F);
+		const newFCarry = (parentObj.registerD > 0x7F);
 		parentObj.registerD = ((parentObj.registerD << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2410,7 +2410,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL E
 	//#0x13:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registerE > 0x7F);
+		const newFCarry = (parentObj.registerE > 0x7F);
 		parentObj.registerE = ((parentObj.registerE << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2419,7 +2419,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL H
 	//#0x14:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registersHL > 0x7FFF);
+		const newFCarry = (parentObj.registersHL > 0x7FFF);
 		parentObj.registersHL = ((parentObj.registersHL << 1) & 0xFE00) | ((parentObj.FCarry) ? 0x100 : 0) | (parentObj.registersHL & 0xFF);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2428,7 +2428,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL L
 	//#0x15:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registersHL & 0x80) == 0x80);
+		const newFCarry = ((parentObj.registersHL & 0x80) == 0x80);
 		parentObj.registersHL = (parentObj.registersHL & 0xFF00) | ((parentObj.registersHL << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2437,8 +2437,8 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL (HL)
 	//#0x16:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
-		var newFCarry = (temp_var > 0x7F);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const newFCarry = (temp_var > 0x7F);
 		temp_var = ((temp_var << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2448,7 +2448,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RL A
 	//#0x17:
 	,function (parentObj) {
-		var newFCarry = (parentObj.registerA > 0x7F);
+		const newFCarry = (parentObj.registerA > 0x7F);
 		parentObj.registerA = ((parentObj.registerA << 1) & 0xFF) | ((parentObj.FCarry) ? 1 : 0);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2457,7 +2457,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR B
 	//#0x18:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registerB & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registerB & 0x01) == 0x01);
 		parentObj.registerB = ((parentObj.FCarry) ? 0x80 : 0) | (parentObj.registerB >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2466,7 +2466,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR C
 	//#0x19:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registerC & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registerC & 0x01) == 0x01);
 		parentObj.registerC = ((parentObj.FCarry) ? 0x80 : 0) | (parentObj.registerC >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2475,7 +2475,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR D
 	//#0x1A:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registerD & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registerD & 0x01) == 0x01);
 		parentObj.registerD = ((parentObj.FCarry) ? 0x80 : 0) | (parentObj.registerD >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2484,7 +2484,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR E
 	//#0x1B:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registerE & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registerE & 0x01) == 0x01);
 		parentObj.registerE = ((parentObj.FCarry) ? 0x80 : 0) | (parentObj.registerE >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2493,7 +2493,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR H
 	//#0x1C:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registersHL & 0x0100) == 0x0100);
+		const newFCarry = ((parentObj.registersHL & 0x0100) == 0x0100);
 		parentObj.registersHL = ((parentObj.FCarry) ? 0x8000 : 0) | ((parentObj.registersHL >> 1) & 0xFF00) | (parentObj.registersHL & 0xFF);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2502,7 +2502,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR L
 	//#0x1D:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registersHL & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registersHL & 0x01) == 0x01);
 		parentObj.registersHL = (parentObj.registersHL & 0xFF00) | ((parentObj.FCarry) ? 0x80 : 0) | ((parentObj.registersHL & 0xFF) >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2511,8 +2511,8 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR (HL)
 	//#0x1E:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
-		var newFCarry = ((temp_var & 0x01) == 0x01);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const newFCarry = ((temp_var & 0x01) == 0x01);
 		temp_var = ((parentObj.FCarry) ? 0x80 : 0) | (temp_var >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2522,7 +2522,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//RR A
 	//#0x1F:
 	,function (parentObj) {
-		var newFCarry = ((parentObj.registerA & 0x01) == 0x01);
+		const newFCarry = ((parentObj.registerA & 0x01) == 0x01);
 		parentObj.registerA = ((parentObj.FCarry) ? 0x80 : 0) | (parentObj.registerA >> 1);
 		parentObj.FCarry = newFCarry;
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -2579,7 +2579,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//SLA (HL)
 	//#0x26:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FCarry = (temp_var > 0x7F);
 		temp_var = (temp_var << 1) & 0xFF;
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2645,7 +2645,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//SRA (HL)
 	//#0x2E:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FCarry = ((temp_var & 0x01) == 0x01);
 		temp_var = (temp_var & 0x80) | (temp_var >> 1);
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
@@ -2705,7 +2705,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//SWAP (HL)
 	//#0x36:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		let temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		temp_var = ((temp_var & 0xF) << 4) | (temp_var >> 4);
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var);
 		parentObj.FZero = (temp_var == 0);
@@ -2769,7 +2769,7 @@ GameBoyCore.prototype.CBOPCODE = [
 	//SRL (HL)
 	//#0x3E:
 	,function (parentObj) {
-		var temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
+		const temp_var = parentObj.memoryReader[parentObj.registersHL](parentObj, parentObj.registersHL);
 		parentObj.FCarry = ((temp_var & 0x01) == 0x01);
 		parentObj.memoryWriter[parentObj.registersHL](parentObj, parentObj.registersHL, temp_var >> 1);
 		parentObj.FHalfCarry = parentObj.FSubtract = false;
@@ -4162,8 +4162,8 @@ GameBoyCore.prototype.saveState = function () {
 	];
 }
 GameBoyCore.prototype.returnFromState = function (returnedFrom) {
-	var index = 0;
-	var state = returnedFrom.slice(0);
+	let index = 0;
+	const state = returnedFrom.slice(0);
 	this.ROM = this.toTypedArray(state[index++], "uint8");
 	this.ROMBankEdge = Math.floor(this.ROM.length / 0x4000);
 	this.inBootstrap = state[index++];
@@ -4386,8 +4386,8 @@ GameBoyCore.prototype.returnFromState = function (returnedFrom) {
 }
 GameBoyCore.prototype.returnFromRTCState = function () {
 	if (typeof this.openRTC == "function" && this.cTIMER) {
-		var rtcData = this.openRTC(this.name);
-		var index = 0;
+		const rtcData = this.openRTC(this.name);
+		let index = 0;
 		this.lastIteration = rtcData[index++];
 		this.RTCisLatched = rtcData[index++];
 		this.latchedSeconds = rtcData[index++];
@@ -4420,8 +4420,8 @@ GameBoyCore.prototype.initMemory = function () {
 	this.channel3PCM = this.getTypedArray(0x20, 0, "int8");
 }
 GameBoyCore.prototype.generateCacheArray = function (tileAmount) {
-	var tileArray = [];
-	var tileNumber = 0;
+	const tileArray = [];
+	let tileNumber = 0;
 	while (tileNumber < tileAmount) {
 		tileArray[tileNumber++] = this.getTypedArray(64, 0, "uint8");
 	}
@@ -4430,7 +4430,7 @@ GameBoyCore.prototype.generateCacheArray = function (tileAmount) {
 GameBoyCore.prototype.initSkipBootstrap = function () {
 	//Fill in the boot ROM set register values
 	//Default values to the GB boot ROM values, then fill in the GBC boot ROM values after ROM loading
-	var index = 0xFF;
+	let index = 0xFF;
 	while (index >= 0) {
 		if (index >= 0x30 && index < 0x40) {
 			this.memoryWrite(0xFF00 | index, this.ffxxDump[index]);
@@ -4607,12 +4607,12 @@ GameBoyCore.prototype.ROMLoad = function () {
 	//Load the first two ROM banks (0x0000 - 0x7FFF) into regular gameboy memory:
 	this.ROM = [];
 	this.usedBootROM = settings[1] && ((!settings[11] && this.GBCBOOTROM.length == 0x800) || (settings[11] && this.GBBOOTROM.length == 0x100));
-	var maxLength = this.ROMImage.length;
+	const maxLength = this.ROMImage.length;
 	if (maxLength < 0x4000) {
 		throw(new Error("ROM image size too small."));
 	}
 	this.ROM = this.getTypedArray(maxLength, 0, "uint8");
-	var romIndex = 0;
+	let romIndex = 0;
 	if (this.usedBootROM) {
 		if (!settings[11]) {
 			//Patch in the GBC boot ROM into the memory map:
@@ -4661,8 +4661,8 @@ GameBoyCore.prototype.getROMImage = function () {
 	if (this.ROMImage.length > 0) {
 		return this.ROMImage.length;
 	}
-	var length = this.ROM.length;
-	for (var index = 0; index < length; index++) {
+	const length = this.ROM.length;
+	for (let index = 0; index < length; index++) {
 		this.ROMImage += String.fromCharCode(this.ROM[index]);
 	}
 	return this.ROMImage;
@@ -4686,7 +4686,7 @@ GameBoyCore.prototype.interpretCartridge = function () {
 	this.cartridgeType = this.ROM[0x147];
 	cout("Cartridge type #" + this.cartridgeType, 0);
 	//Map out ROM cartridge sub-types.
-	var MBCType = "";
+	let MBCType = "";
 	switch (this.cartridgeType) {
 		case 0x00:
 			//ROM w/o bank switching
@@ -4886,8 +4886,8 @@ GameBoyCore.prototype.interpretCartridge = function () {
 	}
 	this.initializeModeSpecificArrays();
 	//License Code Lookup:
-	var cOldLicense = this.ROM[0x14B];
-	var cNewLicense = (this.ROM[0x144] & 0xFF00) | (this.ROM[0x145] & 0xFF);
+	const cOldLicense = this.ROM[0x14B];
+	const cNewLicense = (this.ROM[0x144] & 0xFF00) | (this.ROM[0x145] & 0xFF);
 	if (cOldLicense != 0x33) {
 		//Old Style License Header
 		cout("Old style license code: " + cOldLicense, 0);
@@ -4955,7 +4955,7 @@ GameBoyCore.prototype.setupRAM = function () {
 			this.MBCRAMBanksEnabled = true;
 		}
 		//Switched RAM Used
-		var MBCRam = (typeof this.openMBC == "function") ? this.openMBC(this.name) : [];
+		const MBCRam = (typeof this.openMBC == "function") ? this.openMBC(this.name) : [];
 		if (MBCRam.length > 0) {
 			//Flash the SRAM into memory:
 			this.MBCRam = this.toTypedArray(MBCRam, "uint8");
@@ -5028,7 +5028,7 @@ GameBoyCore.prototype.initLCD = function () {
 			cout("Falling back to the getImageData initialization (Error \"" + error.message + "\").", 1);
 			this.canvasBuffer = this.drawContextOffscreen.getImageData(0, 0, this.offscreenWidth, this.offscreenHeight);
 		}
-		var index = this.offscreenRGBCount;
+		let index = this.offscreenRGBCount;
 		while (index > 0) {
 			this.canvasBuffer.data[index -= 4] = 0xF8;
 			this.canvasBuffer.data[index + 1] = 0xF8;
@@ -5112,11 +5112,11 @@ GameBoyCore.prototype.initAudioBuffer = function () {
 }
 GameBoyCore.prototype.intializeWhiteNoise = function () {
 	//Noise Sample Tables:
-	var randomFactor = 1;
+	let randomFactor = 1;
 	//15-bit LSFR Cache Generation:
 	this.LSFR15Table = this.getTypedArray(0x80000, 0, "int8");
-	var LSFR = 0x7FFF;	//Seed value has all its bits set.
-	var LSFRShifted = 0x3FFF;
+	let LSFR = 0x7FFF;	//Seed value has all its bits set.
+	let LSFRShifted = 0x3FFF;
 	for (var index = 0; index < 0x8000; ++index) {
 		//Normalize the last LSFR value for usage:
 		randomFactor = 1 - (LSFR & 1);	//Docs say it's the inverse.
@@ -5171,7 +5171,7 @@ GameBoyCore.prototype.intializeWhiteNoise = function () {
 }
 GameBoyCore.prototype.audioUnderrunAdjustment = function () {
 	if (settings[0]) {
-		var underrunAmount = this.audioHandle.remainingBuffer();
+		let underrunAmount = this.audioHandle.remainingBuffer();
 		if (typeof underrunAmount == "number") {
 			underrunAmount = this.bufferContainAmount - Math.max(underrunAmount, 0);
 			if (underrunAmount > 0) {
@@ -5266,9 +5266,9 @@ GameBoyCore.prototype.outputAudio = function () {
 }
 //Below are the audio generation functions timed against the CPU:
 GameBoyCore.prototype.generateAudio = function (numSamples) {
-	var multiplier = 0;
+	let multiplier = 0;
 	if (this.soundMasterEnabled && !this.CPUStopped) {
-		for (var clockUpTo = 0; numSamples > 0;) {
+		for (let clockUpTo = 0; numSamples > 0;) {
 			clockUpTo = Math.min(this.audioClocksUntilNextEventCounter, this.sequencerClocks, numSamples);
 			this.audioClocksUntilNextEventCounter -= clockUpTo;
 			this.sequencerClocks -= clockUpTo;
@@ -5308,7 +5308,7 @@ GameBoyCore.prototype.generateAudio = function (numSamples) {
 //Generate audio, but don't actually output it (Used for when sound is disabled by user/browser):
 GameBoyCore.prototype.generateAudioFake = function (numSamples) {
 	if (this.soundMasterEnabled && !this.CPUStopped) {
-		for (var clockUpTo = 0; numSamples > 0;) {
+		for (let clockUpTo = 0; numSamples > 0;) {
 			clockUpTo = Math.min(this.audioClocksUntilNextEventCounter, this.sequencerClocks, numSamples);
 			this.audioClocksUntilNextEventCounter -= clockUpTo;
 			this.sequencerClocks -= clockUpTo;
@@ -5442,7 +5442,7 @@ GameBoyCore.prototype.channel1AudioSweepPerformDummy = function () {
 	//Channel 1:
 	if (this.channel1frequencySweepDivider > 0) {
 		if (!this.channel1decreaseSweep) {
-			var channel1ShadowFrequency = this.channel1ShadowFrequency + (this.channel1ShadowFrequency >> this.channel1frequencySweepDivider);
+			const channel1ShadowFrequency = this.channel1ShadowFrequency + (this.channel1ShadowFrequency >> this.channel1frequencySweepDivider);
 			if (channel1ShadowFrequency <= 0x7FF) {
 				//Run overflow check twice:
 				if ((channel1ShadowFrequency + (channel1ShadowFrequency >> this.channel1frequencySweepDivider)) > 0x7FF) {
@@ -5754,8 +5754,8 @@ GameBoyCore.prototype.run = function () {
 }
 GameBoyCore.prototype.executeIteration = function () {
 	//Iterate the interpreter loop:
-	var opcodeToExecute = 0;
-	var timedTicks = 0;
+	let opcodeToExecute = 0;
+	let timedTicks = 0;
 	while (this.stopEmulator == 0) {
 		//Interrupt Arming:
 		switch (this.IRQEnableDelay) {
@@ -5846,7 +5846,7 @@ GameBoyCore.prototype.handleSTOP = function () {
 	}
 }
 GameBoyCore.prototype.recalculateIterationClockLimit = function () {
-	var endModulus = this.CPUCyclesTotalCurrent % 4;
+	const endModulus = this.CPUCyclesTotalCurrent % 4;
 	this.CPUCyclesTotal = this.CPUCyclesTotalBase + this.CPUCyclesTotalCurrent - endModulus;
 	this.CPUCyclesTotalCurrent = endModulus;
 }
@@ -5930,10 +5930,10 @@ GameBoyCore.prototype.clocksUntilMode0 = function () {
 GameBoyCore.prototype.updateSpriteCount = function (line) {
 	this.spriteCount = 252;
 	if (this.cGBC && this.gfxSpriteShow) {										//Is the window enabled and are we in CGB mode?
-		var lineAdjusted = line + 0x10;
-		var yoffset = 0;
-		var yCap = (this.gfxSpriteNormalHeight) ? 0x8 : 0x10;
-		for (var OAMAddress = 0xFE00; OAMAddress < 0xFEA0 && this.spriteCount < 312; OAMAddress += 4) {
+		const lineAdjusted = line + 0x10;
+		let yoffset = 0;
+		const yCap = (this.gfxSpriteNormalHeight) ? 0x8 : 0x10;
+		for (let OAMAddress = 0xFE00; OAMAddress < 0xFEA0 && this.spriteCount < 312; OAMAddress += 4) {
 			yoffset = lineAdjusted - this.memory[OAMAddress];
 			if (yoffset > -1 && yoffset < yCap) {
 				this.spriteCount += 6;
@@ -5958,7 +5958,7 @@ GameBoyCore.prototype.updateCore = function () {
 	this.LCDTicks += this.CPUTicks >> this.doubleSpeedShifter;	//LCD Timing
 	this.LCDCONTROL[this.actualScanLine](this);					//Scan Line and STAT Mode Control
 	//Single-speed relative timing for A/V emulation:
-	var timedTicks = this.CPUTicks >> this.doubleSpeedShifter;	//CPU clocking can be updated from the LCD handling.
+	const timedTicks = this.CPUTicks >> this.doubleSpeedShifter;	//CPU clocking can be updated from the LCD handling.
 	this.audioTicks += timedTicks;								//Audio Timing
 	this.emulatorTicks += timedTicks;							//Emulator Timing
 	//CPU Timers:
@@ -5999,7 +5999,7 @@ GameBoyCore.prototype.updateCoreFull = function () {
 }
 GameBoyCore.prototype.initializeLCDController = function () {
 	//Display on hanlding:
-	var line = 0;
+	let line = 0;
 	while (line < 154) {
 		if (line < 143) {
 			//We're on a normal scan line:
@@ -6201,9 +6201,9 @@ GameBoyCore.prototype.executeHDMA = function () {
 }
 GameBoyCore.prototype.clockUpdate = function () {
 	if (this.cTIMER) {
-		var dateObj = new Date();
-		var newTime = dateObj.getTime();
-		var timeElapsed = newTime - this.lastIteration;	//Get the numnber of milliseconds since this last executed.
+		const dateObj = new Date();
+		const newTime = dateObj.getTime();
+		const timeElapsed = newTime - this.lastIteration;	//Get the numnber of milliseconds since this last executed.
 		this.lastIteration = newTime;
 		if (this.cTIMER && !this.RTCHALT) {
 			//Update the MBC3 RTC:
@@ -6249,10 +6249,10 @@ GameBoyCore.prototype.dispatchDraw = function () {
 	}
 }
 GameBoyCore.prototype.processDraw = function (frameBuffer) {
-	var canvasRGBALength = this.offscreenRGBCount;
-	var canvasData = this.canvasBuffer.data;
-	var bufferIndex = 0;
-	for (var canvasIndex = 0; canvasIndex < canvasRGBALength; ++canvasIndex) {
+	const canvasRGBALength = this.offscreenRGBCount;
+	const canvasData = this.canvasBuffer.data;
+	let bufferIndex = 0;
+	for (let canvasIndex = 0; canvasIndex < canvasRGBALength; ++canvasIndex) {
 		canvasData[canvasIndex++] = frameBuffer[bufferIndex++];
 		canvasData[canvasIndex++] = frameBuffer[bufferIndex++];
 		canvasData[canvasIndex++] = frameBuffer[bufferIndex++];
@@ -6262,18 +6262,18 @@ GameBoyCore.prototype.processDraw = function (frameBuffer) {
 }
 GameBoyCore.prototype.swizzleFrameBuffer = function () {
 	//Convert our dirty 24-bit (24-bit, with internal render flags above it) framebuffer to an 8-bit buffer with separate indices for the RGB channels:
-	var frameBuffer = this.frameBuffer;
-	var swizzledFrame = this.swizzledFrame;
-	var bufferIndex = 0;
-	for (var canvasIndex = 0; canvasIndex < 69120;) {
+	const frameBuffer = this.frameBuffer;
+	const swizzledFrame = this.swizzledFrame;
+	let bufferIndex = 0;
+	for (let canvasIndex = 0; canvasIndex < 69120;) {
 		swizzledFrame[canvasIndex++] = (frameBuffer[bufferIndex] >> 16) & 0xFF;		//Red
 		swizzledFrame[canvasIndex++] = (frameBuffer[bufferIndex] >> 8) & 0xFF;		//Green
 		swizzledFrame[canvasIndex++] = frameBuffer[bufferIndex++] & 0xFF;			//Blue
 	}
 }
 GameBoyCore.prototype.clearFrameBuffer = function () {
-	var bufferIndex = 0;
-	var frameBuffer = this.swizzledFrame;
+	let bufferIndex = 0;
+	const frameBuffer = this.swizzledFrame;
 	if (this.cGBC || this.colorizedGBPalettes) {
 		while (bufferIndex < 69120) {
 			frameBuffer[bufferIndex++] = 248;
@@ -6296,7 +6296,7 @@ GameBoyCore.prototype.resizeFrameBuffer = function () {
 }
 GameBoyCore.prototype.compileResizeFrameBufferFunction = function () {
 	if (this.offscreenRGBCount > 0) {
-		var parentObj = this;
+		const parentObj = this;
 		this.resizer = new Resize(160, 144, this.offscreenWidth, this.offscreenHeight, false, settings[13], false, function (buffer) {
 			if ((buffer.length / 3 * 4) == parentObj.offscreenRGBCount) {
 				parentObj.processDraw(buffer);
@@ -6313,9 +6313,9 @@ GameBoyCore.prototype.renderScanLine = function (scanlineToRender) {
 		this.WindowLayerRender(scanlineToRender);
 	}
 	else {
-		var pixelLine = (scanlineToRender + 1) * 160;
-		var defaultColor = (this.cGBC || this.colorizedGBPalettes) ? 0xF8F8F8 : 0xEFFFDE;
-		for (var pixelPosition = (scanlineToRender * 160) + this.currentX; pixelPosition < pixelLine; pixelPosition++) {
+		const pixelLine = (scanlineToRender + 1) * 160;
+		const defaultColor = (this.cGBC || this.colorizedGBPalettes) ? 0xF8F8F8 : 0xEFFFDE;
+		for (let pixelPosition = (scanlineToRender * 160) + this.currentX; pixelPosition < pixelLine; pixelPosition++) {
 			this.frameBuffer[pixelPosition] = defaultColor;
 		}
 	}
@@ -6339,9 +6339,9 @@ GameBoyCore.prototype.renderMidScanLine = function () {
 				//TODO: Do midscanline JIT for sprites...
 			}
 			else {
-				var pixelLine = (this.lastUnrenderedLine * 160) + this.pixelEnd;
-				var defaultColor = (this.cGBC || this.colorizedGBPalettes) ? 0xF8F8F8 : 0xEFFFDE;
-				for (var pixelPosition = (this.lastUnrenderedLine * 160) + this.currentX; pixelPosition < pixelLine; pixelPosition++) {
+				const pixelLine = (this.lastUnrenderedLine * 160) + this.pixelEnd;
+				const defaultColor = (this.cGBC || this.colorizedGBPalettes) ? 0xF8F8F8 : 0xEFFFDE;
+				for (let pixelPosition = (this.lastUnrenderedLine * 160) + this.currentX; pixelPosition < pixelLine; pixelPosition++) {
 					this.frameBuffer[pixelPosition] = defaultColor;
 				}
 			}
@@ -6420,7 +6420,7 @@ GameBoyCore.prototype.priorityFlaggingPathRebuild = function () {
 }
 GameBoyCore.prototype.initializeReferencesFromSaveState = function () {
 	this.LCDCONTROL = (this.LCDisOn) ? this.LINECONTROL : this.DISPLAYOFFCONTROL;
-	var tileIndex = 0;
+	let tileIndex = 0;
 	if (!this.cGBC) {
 		if (this.colorizedGBPalettes) {
 			this.BGPalette = this.gbBGColorizedPalette;
@@ -6455,9 +6455,9 @@ GameBoyCore.prototype.initializeReferencesFromSaveState = function () {
 }
 GameBoyCore.prototype.RGBTint = function (value) {
 	//Adjustment for the GBC's tinting (According to Gambatte):
-	var r = value & 0x1F;
-	var g = (value >> 5) & 0x1F;
-	var b = (value >> 10) & 0x1F;
+	const r = value & 0x1F;
+	const g = (value >> 5) & 0x1F;
+	const b = (value >> 10) & 0x1F;
 	return ((r * 13 + g * 2 + b) >> 1) << 16 | (g * 3 + b) << 9 | (r * 3 + g * 2 + b * 11) >> 1;
 }
 GameBoyCore.prototype.getGBCColor = function () {
@@ -6540,22 +6540,22 @@ GameBoyCore.prototype.updateGBCOBJPalette = function (index, data) {
 	}
 }
 GameBoyCore.prototype.BGGBLayerRender = function (scanlineToRender) {
-	var scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
-	var tileYLine = (scrollYAdjusted & 7) << 3;
-	var tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
-	var scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
-	var pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
-	var pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
-	var tileNumber = tileYDown + (scrollXAdjusted >> 3);
-	var chrCode = this.BGCHRBank1[tileNumber];
+	const scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
+	const tileYLine = (scrollYAdjusted & 7) << 3;
+	let tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
+	let scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
+	let pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
+	const pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
+	let tileNumber = tileYDown + (scrollXAdjusted >> 3);
+	let chrCode = this.BGCHRBank1[tileNumber];
 	if (chrCode < this.gfxBackgroundBankOffset) {
 		chrCode |= 0x100;
 	}
-	var tile = this.tileCache[chrCode];
+	let tile = this.tileCache[chrCode];
 	for (var texel = (scrollXAdjusted & 0x7); texel < 8 && pixelPosition < pixelPositionEnd && scrollXAdjusted < 0x100; ++scrollXAdjusted) {
 		this.frameBuffer[pixelPosition++] = this.BGPalette[tile[tileYLine | texel++]];
 	}
-	var scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
+	let scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
 	scrollXAdjusted += scrollXAdjustedAligned << 3;
 	scrollXAdjustedAligned += tileNumber;
 	while (tileNumber < scrollXAdjustedAligned) {
@@ -6628,24 +6628,24 @@ GameBoyCore.prototype.BGGBLayerRender = function (scanlineToRender) {
 	}
 }
 GameBoyCore.prototype.BGGBCLayerRender = function (scanlineToRender) {
-	var scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
-	var tileYLine = (scrollYAdjusted & 7) << 3;
-	var tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
-	var scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
-	var pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
-	var pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
-	var tileNumber = tileYDown + (scrollXAdjusted >> 3);
-	var chrCode = this.BGCHRBank1[tileNumber];
+	const scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
+	const tileYLine = (scrollYAdjusted & 7) << 3;
+	let tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
+	let scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
+	let pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
+	const pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
+	let tileNumber = tileYDown + (scrollXAdjusted >> 3);
+	let chrCode = this.BGCHRBank1[tileNumber];
 	if (chrCode < this.gfxBackgroundBankOffset) {
 		chrCode |= 0x100;
 	}
-	var attrCode = this.BGCHRBank2[tileNumber];
-	var tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
-	var palette = ((attrCode & 0x7) << 2) | ((attrCode & 0x80) >> 2);
+	let attrCode = this.BGCHRBank2[tileNumber];
+	let tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
+	let palette = ((attrCode & 0x7) << 2) | ((attrCode & 0x80) >> 2);
 	for (var texel = (scrollXAdjusted & 0x7); texel < 8 && pixelPosition < pixelPositionEnd && scrollXAdjusted < 0x100; ++scrollXAdjusted) {
 		this.frameBuffer[pixelPosition++] = this.gbcBGPalette[palette | tile[tileYLine | texel++]];
 	}
-	var scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
+	let scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
 	scrollXAdjusted += scrollXAdjustedAligned << 3;
 	scrollXAdjustedAligned += tileNumber;
 	while (tileNumber < scrollXAdjustedAligned) {
@@ -6726,24 +6726,24 @@ GameBoyCore.prototype.BGGBCLayerRender = function (scanlineToRender) {
 	}
 }
 GameBoyCore.prototype.BGGBCLayerRenderNoPriorityFlagging = function (scanlineToRender) {
-	var scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
-	var tileYLine = (scrollYAdjusted & 7) << 3;
-	var tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
-	var scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
-	var pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
-	var pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
-	var tileNumber = tileYDown + (scrollXAdjusted >> 3);
-	var chrCode = this.BGCHRBank1[tileNumber];
+	const scrollYAdjusted = (this.backgroundY + scanlineToRender) & 0xFF;						//The line of the BG we're at.
+	const tileYLine = (scrollYAdjusted & 7) << 3;
+	let tileYDown = this.gfxBackgroundCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2);	//The row of cached tiles we're fetching from.
+	let scrollXAdjusted = (this.backgroundX + this.currentX) & 0xFF;						//The scroll amount of the BG.
+	let pixelPosition = this.pixelStart + this.currentX;									//Current pixel we're working on.
+	const pixelPositionEnd = this.pixelStart + ((this.gfxWindowDisplay && (scanlineToRender - this.windowY) >= 0) ? Math.min(Math.max(this.windowX, 0) + this.currentX, this.pixelEnd) : this.pixelEnd);	//Make sure we do at most 160 pixels a scanline.
+	let tileNumber = tileYDown + (scrollXAdjusted >> 3);
+	let chrCode = this.BGCHRBank1[tileNumber];
 	if (chrCode < this.gfxBackgroundBankOffset) {
 		chrCode |= 0x100;
 	}
-	var attrCode = this.BGCHRBank2[tileNumber];
-	var tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
-	var palette = (attrCode & 0x7) << 2;
+	let attrCode = this.BGCHRBank2[tileNumber];
+	let tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
+	let palette = (attrCode & 0x7) << 2;
 	for (var texel = (scrollXAdjusted & 0x7); texel < 8 && pixelPosition < pixelPositionEnd && scrollXAdjusted < 0x100; ++scrollXAdjusted) {
 		this.frameBuffer[pixelPosition++] = this.gbcBGPalette[palette | tile[tileYLine | texel++]];
 	}
-	var scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
+	let scrollXAdjustedAligned = Math.min(pixelPositionEnd - pixelPosition, 0x100 - scrollXAdjusted) >> 3;
 	scrollXAdjusted += scrollXAdjustedAligned << 3;
 	scrollXAdjustedAligned += tileNumber;
 	while (tileNumber < scrollXAdjustedAligned) {
@@ -6825,20 +6825,20 @@ GameBoyCore.prototype.BGGBCLayerRenderNoPriorityFlagging = function (scanlineToR
 }
 GameBoyCore.prototype.WindowGBLayerRender = function (scanlineToRender) {
 	if (this.gfxWindowDisplay) {									//Is the window enabled?
-		var scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
+		const scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
 		if (scrollYAdjusted >= 0) {
-			var scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
-			var pixelPosition = this.pixelStart + scrollXRangeAdjusted;
-			var pixelPositionEnd = this.pixelStart + this.pixelEnd;
+			let scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
+			let pixelPosition = this.pixelStart + scrollXRangeAdjusted;
+			const pixelPositionEnd = this.pixelStart + this.pixelEnd;
 			if (pixelPosition < pixelPositionEnd) {
-				var tileYLine = (scrollYAdjusted & 0x7) << 3;
-				var tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
-				var chrCode = this.BGCHRBank1[tileNumber];
+				const tileYLine = (scrollYAdjusted & 0x7) << 3;
+				let tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
+				let chrCode = this.BGCHRBank1[tileNumber];
 				if (chrCode < this.gfxBackgroundBankOffset) {
 					chrCode |= 0x100;
 				}
-				var tile = this.tileCache[chrCode];
-				var texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
+				let tile = this.tileCache[chrCode];
+				let texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
 				scrollXRangeAdjusted = Math.min(8, texel + pixelPositionEnd - pixelPosition);
 				while (texel < scrollXRangeAdjusted) {
 					this.frameBuffer[pixelPosition++] = this.BGPalette[tile[tileYLine | texel++]];
@@ -6889,22 +6889,22 @@ GameBoyCore.prototype.WindowGBLayerRender = function (scanlineToRender) {
 }
 GameBoyCore.prototype.WindowGBCLayerRender = function (scanlineToRender) {
 	if (this.gfxWindowDisplay) {									//Is the window enabled?
-		var scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
+		const scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
 		if (scrollYAdjusted >= 0) {
-			var scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
-			var pixelPosition = this.pixelStart + scrollXRangeAdjusted;
-			var pixelPositionEnd = this.pixelStart + this.pixelEnd;
+			let scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
+			let pixelPosition = this.pixelStart + scrollXRangeAdjusted;
+			const pixelPositionEnd = this.pixelStart + this.pixelEnd;
 			if (pixelPosition < pixelPositionEnd) {
-				var tileYLine = (scrollYAdjusted & 0x7) << 3;
-				var tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
-				var chrCode = this.BGCHRBank1[tileNumber];
+				const tileYLine = (scrollYAdjusted & 0x7) << 3;
+				let tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
+				let chrCode = this.BGCHRBank1[tileNumber];
 				if (chrCode < this.gfxBackgroundBankOffset) {
 					chrCode |= 0x100;
 				}
-				var attrCode = this.BGCHRBank2[tileNumber];
-				var tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
-				var palette = ((attrCode & 0x7) << 2) | ((attrCode & 0x80) >> 2);
-				var texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
+				let attrCode = this.BGCHRBank2[tileNumber];
+				let tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
+				let palette = ((attrCode & 0x7) << 2) | ((attrCode & 0x80) >> 2);
+				let texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
 				scrollXRangeAdjusted = Math.min(8, texel + pixelPositionEnd - pixelPosition);
 				while (texel < scrollXRangeAdjusted) {
 					this.frameBuffer[pixelPosition++] = this.gbcBGPalette[palette | tile[tileYLine | texel++]];
@@ -6959,22 +6959,22 @@ GameBoyCore.prototype.WindowGBCLayerRender = function (scanlineToRender) {
 }
 GameBoyCore.prototype.WindowGBCLayerRenderNoPriorityFlagging = function (scanlineToRender) {
 	if (this.gfxWindowDisplay) {									//Is the window enabled?
-		var scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
+		const scrollYAdjusted = scanlineToRender - this.windowY;		//The line of the BG we're at.
 		if (scrollYAdjusted >= 0) {
-			var scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
-			var pixelPosition = this.pixelStart + scrollXRangeAdjusted;
-			var pixelPositionEnd = this.pixelStart + this.pixelEnd;
+			let scrollXRangeAdjusted = (this.windowX > 0) ? (this.windowX + this.currentX) : this.currentX;
+			let pixelPosition = this.pixelStart + scrollXRangeAdjusted;
+			const pixelPositionEnd = this.pixelStart + this.pixelEnd;
 			if (pixelPosition < pixelPositionEnd) {
-				var tileYLine = (scrollYAdjusted & 0x7) << 3;
-				var tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
-				var chrCode = this.BGCHRBank1[tileNumber];
+				const tileYLine = (scrollYAdjusted & 0x7) << 3;
+				let tileNumber = (this.gfxWindowCHRBankPosition | ((scrollYAdjusted & 0xF8) << 2)) + (this.currentX >> 3);
+				let chrCode = this.BGCHRBank1[tileNumber];
 				if (chrCode < this.gfxBackgroundBankOffset) {
 					chrCode |= 0x100;
 				}
-				var attrCode = this.BGCHRBank2[tileNumber];
-				var tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
-				var palette = (attrCode & 0x7) << 2;
-				var texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
+				let attrCode = this.BGCHRBank2[tileNumber];
+				let tile = this.tileCache[((attrCode & 0x08) << 8) | ((attrCode & 0x60) << 4) | chrCode];
+				let palette = (attrCode & 0x7) << 2;
+				let texel = (scrollXRangeAdjusted - this.windowX) & 0x7;
 				scrollXRangeAdjusted = Math.min(8, texel + pixelPositionEnd - pixelPosition);
 				while (texel < scrollXRangeAdjusted) {
 					this.frameBuffer[pixelPosition++] = this.gbcBGPalette[palette | tile[tileYLine | texel++]];
@@ -7029,20 +7029,20 @@ GameBoyCore.prototype.WindowGBCLayerRenderNoPriorityFlagging = function (scanlin
 }
 GameBoyCore.prototype.SpriteGBLayerRender = function (scanlineToRender) {
 	if (this.gfxSpriteShow) {										//Are sprites enabled?
-		var lineAdjusted = scanlineToRender + 0x10;
-		var OAMAddress = 0xFE00;
-		var yoffset = 0;
-		var xcoord = 1;
-		var xCoordStart = 0;
-		var xCoordEnd = 0;
-		var attrCode = 0;
-		var palette = 0;
-		var tile = null;
-		var data = 0;
-		var spriteCount = 0;
+		const lineAdjusted = scanlineToRender + 0x10;
+		let OAMAddress = 0xFE00;
+		let yoffset = 0;
+		let xcoord = 1;
+		let xCoordStart = 0;
+		let xCoordEnd = 0;
+		let attrCode = 0;
+		let palette = 0;
+		let tile = null;
+		let data = 0;
+		let spriteCount = 0;
 		var length = 0;
-		var currentPixel = 0;
-		var linePixel = 0;
+		let currentPixel = 0;
+		let linePixel = 0;
 		//Clear our x-coord sort buffer:
 		while (xcoord < 168) {
 			this.sortBuffer[xcoord++] = 0xFF;
@@ -7118,9 +7118,9 @@ GameBoyCore.prototype.SpriteGBLayerRender = function (scanlineToRender) {
 	}
 }
 GameBoyCore.prototype.findLowestSpriteDrawable = function (scanlineToRender, drawableRange) {
-	var address = 0xFE00;
-	var spriteCount = 0;
-	var diff = 0;
+	let address = 0xFE00;
+	let spriteCount = 0;
+	let diff = 0;
 	while (address < 0xFEA0 && spriteCount < 10) {
 		diff = scanlineToRender - this.memory[address];
 		if ((diff & drawableRange) == diff) {
@@ -7132,18 +7132,18 @@ GameBoyCore.prototype.findLowestSpriteDrawable = function (scanlineToRender, dra
 }
 GameBoyCore.prototype.SpriteGBCLayerRender = function (scanlineToRender) {
 	if (this.gfxSpriteShow) {										//Are sprites enabled?
-		var OAMAddress = 0xFE00;
-		var lineAdjusted = scanlineToRender + 0x10;
-		var yoffset = 0;
-		var xcoord = 0;
-		var endX = 0;
-		var xCounter = 0;
-		var attrCode = 0;
-		var palette = 0;
-		var tile = null;
-		var data = 0;
-		var currentPixel = 0;
-		var spriteCount = 0;
+		let OAMAddress = 0xFE00;
+		const lineAdjusted = scanlineToRender + 0x10;
+		let yoffset = 0;
+		let xcoord = 0;
+		let endX = 0;
+		let xCounter = 0;
+		let attrCode = 0;
+		let palette = 0;
+		let tile = null;
+		let data = 0;
+		let currentPixel = 0;
+		let spriteCount = 0;
 		if (this.gfxSpriteNormalHeight) {
 			for (; OAMAddress < 0xFEA0 && spriteCount < 10; OAMAddress += 4) {
 				yoffset = lineAdjusted - this.memory[OAMAddress];
@@ -7211,8 +7211,8 @@ GameBoyCore.prototype.SpriteGBCLayerRender = function (scanlineToRender) {
 }
 //Generate only a single tile line for the GB tile cache mode:
 GameBoyCore.prototype.generateGBTileLine = function (address) {
-	var lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
-	var tileBlock = this.tileCache[(address & 0x1FF0) >> 4];
+	const lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
+	const tileBlock = this.tileCache[(address & 0x1FF0) >> 4];
 	address = (address & 0xE) << 2;
 	tileBlock[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
 	tileBlock[address | 6] = ((lineCopy & 0x200) >> 8) | ((lineCopy & 0x2) >> 1);
@@ -7225,14 +7225,14 @@ GameBoyCore.prototype.generateGBTileLine = function (address) {
 }
 //Generate only a single tile line for the GBC tile cache mode (Bank 1):
 GameBoyCore.prototype.generateGBCTileLineBank1 = function (address) {
-	var lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
+	const lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
 	address &= 0x1FFE;
-	var tileBlock1 = this.tileCache[address >> 4];
-	var tileBlock2 = this.tileCache[0x200 | (address >> 4)];
-	var tileBlock3 = this.tileCache[0x400 | (address >> 4)];
-	var tileBlock4 = this.tileCache[0x600 | (address >> 4)];
+	const tileBlock1 = this.tileCache[address >> 4];
+	const tileBlock2 = this.tileCache[0x200 | (address >> 4)];
+	const tileBlock3 = this.tileCache[0x400 | (address >> 4)];
+	const tileBlock4 = this.tileCache[0x600 | (address >> 4)];
 	address = (address & 0xE) << 2;
-	var addressFlipped = 0x38 - address;
+	const addressFlipped = 0x38 - address;
 	tileBlock4[addressFlipped] = tileBlock2[address] = tileBlock3[addressFlipped | 7] = tileBlock1[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
 	tileBlock4[addressFlipped | 1] = tileBlock2[address | 1] = tileBlock3[addressFlipped | 6] = tileBlock1[address | 6] = ((lineCopy & 0x200) >> 8) | ((lineCopy & 0x2) >> 1);
 	tileBlock4[addressFlipped | 2] = tileBlock2[address | 2] = tileBlock3[addressFlipped | 5] = tileBlock1[address | 5] = ((lineCopy & 0x400) >> 9) | ((lineCopy & 0x4) >> 2);
@@ -7244,15 +7244,15 @@ GameBoyCore.prototype.generateGBCTileLineBank1 = function (address) {
 }
 //Generate all the flip combinations for a full GBC VRAM bank 1 tile:
 GameBoyCore.prototype.generateGBCTileBank1 = function (vramAddress) {
-	var address = vramAddress >> 4;
-	var tileBlock1 = this.tileCache[address];
-	var tileBlock2 = this.tileCache[0x200 | address];
-	var tileBlock3 = this.tileCache[0x400 | address];
-	var tileBlock4 = this.tileCache[0x600 | address];
-	var lineCopy = 0;
+	let address = vramAddress >> 4;
+	const tileBlock1 = this.tileCache[address];
+	const tileBlock2 = this.tileCache[0x200 | address];
+	const tileBlock3 = this.tileCache[0x400 | address];
+	const tileBlock4 = this.tileCache[0x600 | address];
+	let lineCopy = 0;
 	vramAddress |= 0x8000;
 	address = 0;
-	var addressFlipped = 56;
+	let addressFlipped = 56;
 	do {
 		lineCopy = (this.memory[0x1 | vramAddress] << 8) | this.memory[vramAddress];
 		tileBlock4[addressFlipped] = tileBlock2[address] = tileBlock3[addressFlipped | 7] = tileBlock1[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
@@ -7270,13 +7270,13 @@ GameBoyCore.prototype.generateGBCTileBank1 = function (vramAddress) {
 }
 //Generate only a single tile line for the GBC tile cache mode (Bank 2):
 GameBoyCore.prototype.generateGBCTileLineBank2 = function (address) {
-	var lineCopy = (this.VRAM[0x1 | address] << 8) | this.VRAM[0x1FFE & address];
-	var tileBlock1 = this.tileCache[0x800 | (address >> 4)];
-	var tileBlock2 = this.tileCache[0xA00 | (address >> 4)];
-	var tileBlock3 = this.tileCache[0xC00 | (address >> 4)];
-	var tileBlock4 = this.tileCache[0xE00 | (address >> 4)];
+	const lineCopy = (this.VRAM[0x1 | address] << 8) | this.VRAM[0x1FFE & address];
+	const tileBlock1 = this.tileCache[0x800 | (address >> 4)];
+	const tileBlock2 = this.tileCache[0xA00 | (address >> 4)];
+	const tileBlock3 = this.tileCache[0xC00 | (address >> 4)];
+	const tileBlock4 = this.tileCache[0xE00 | (address >> 4)];
 	address = (address & 0xE) << 2;
-	var addressFlipped = 0x38 - address;
+	const addressFlipped = 0x38 - address;
 	tileBlock4[addressFlipped] = tileBlock2[address] = tileBlock3[addressFlipped | 7] = tileBlock1[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
 	tileBlock4[addressFlipped | 1] = tileBlock2[address | 1] = tileBlock3[addressFlipped | 6] = tileBlock1[address | 6] = ((lineCopy & 0x200) >> 8) | ((lineCopy & 0x2) >> 1);
 	tileBlock4[addressFlipped | 2] = tileBlock2[address | 2] = tileBlock3[addressFlipped | 5] = tileBlock1[address | 5] = ((lineCopy & 0x400) >> 9) | ((lineCopy & 0x4) >> 2);
@@ -7288,14 +7288,14 @@ GameBoyCore.prototype.generateGBCTileLineBank2 = function (address) {
 }
 //Generate all the flip combinations for a full GBC VRAM bank 2 tile:
 GameBoyCore.prototype.generateGBCTileBank2 = function (vramAddress) {
-	var address = vramAddress >> 4;
-	var tileBlock1 = this.tileCache[0x800 | address];
-	var tileBlock2 = this.tileCache[0xA00 | address];
-	var tileBlock3 = this.tileCache[0xC00 | address];
-	var tileBlock4 = this.tileCache[0xE00 | address];
-	var lineCopy = 0;
+	let address = vramAddress >> 4;
+	const tileBlock1 = this.tileCache[0x800 | address];
+	const tileBlock2 = this.tileCache[0xA00 | address];
+	const tileBlock3 = this.tileCache[0xC00 | address];
+	const tileBlock4 = this.tileCache[0xE00 | address];
+	let lineCopy = 0;
 	address = 0;
-	var addressFlipped = 56;
+	let addressFlipped = 56;
 	do {
 		lineCopy = (this.VRAM[0x1 | vramAddress] << 8) | this.VRAM[vramAddress];
 		tileBlock4[addressFlipped] = tileBlock2[address] = tileBlock3[addressFlipped | 7] = tileBlock1[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
@@ -7313,14 +7313,14 @@ GameBoyCore.prototype.generateGBCTileBank2 = function (vramAddress) {
 }
 //Generate only a single tile line for the GB tile cache mode (OAM accessible range):
 GameBoyCore.prototype.generateGBOAMTileLine = function (address) {
-	var lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
+	const lineCopy = (this.memory[0x1 | address] << 8) | this.memory[0x9FFE & address];
 	address &= 0x1FFE;
-	var tileBlock1 = this.tileCache[address >> 4];
-	var tileBlock2 = this.tileCache[0x200 | (address >> 4)];
-	var tileBlock3 = this.tileCache[0x400 | (address >> 4)];
-	var tileBlock4 = this.tileCache[0x600 | (address >> 4)];
+	const tileBlock1 = this.tileCache[address >> 4];
+	const tileBlock2 = this.tileCache[0x200 | (address >> 4)];
+	const tileBlock3 = this.tileCache[0x400 | (address >> 4)];
+	const tileBlock4 = this.tileCache[0x600 | (address >> 4)];
 	address = (address & 0xE) << 2;
-	var addressFlipped = 0x38 - address;
+	const addressFlipped = 0x38 - address;
 	tileBlock4[addressFlipped] = tileBlock2[address] = tileBlock3[addressFlipped | 7] = tileBlock1[address | 7] = ((lineCopy & 0x100) >> 7) | (lineCopy & 0x1);
 	tileBlock4[addressFlipped | 1] = tileBlock2[address | 1] = tileBlock3[addressFlipped | 6] = tileBlock1[address | 6] = ((lineCopy & 0x200) >> 8) | ((lineCopy & 0x2) >> 1);
 	tileBlock4[addressFlipped | 2] = tileBlock2[address | 2] = tileBlock3[addressFlipped | 5] = tileBlock1[address | 5] = ((lineCopy & 0x400) >> 9) | ((lineCopy & 0x4) >> 2);
@@ -7375,8 +7375,8 @@ GameBoyCore.prototype.midScanLineJIT = function () {
 }
 //Check for the highest priority IRQ to fire:
 GameBoyCore.prototype.launchIRQ = function () {
-	var bitShift = 0;
-	var testbit = 1;
+	let bitShift = 0;
+	let testbit = 1;
 	do {
 		//Check to see if an interrupt is enabled AND requested.
 		if ((testbit & this.IRQLineMatched) == testbit) {
@@ -7420,7 +7420,7 @@ GameBoyCore.prototype.calculateHALTPeriod = function () {
 	if (!this.halt) {
 		this.halt = true;
 		var currentClocks = -1;
-		var temp_var = 0;
+		let temp_var = 0;
 		if (this.LCDisOn) {
 			//If the LCD is enabled, then predict the LCD IRQs enabled:
 			if ((this.interruptsEnabled & 0x1) == 0x1) {
@@ -7470,7 +7470,7 @@ GameBoyCore.prototype.calculateHALTPeriod = function () {
 	else {
 		var currentClocks = this.remainingClocks;
 	}
-	var maxClocks = (this.CPUCyclesTotal - this.emulatorTicks) << this.doubleSpeedShifter;
+	const maxClocks = (this.CPUCyclesTotal - this.emulatorTicks) << this.doubleSpeedShifter;
 	if (currentClocks >= 0) {
 		if (currentClocks <= maxClocks) {
 			//Exit out of HALT normally:
@@ -7502,7 +7502,7 @@ GameBoyCore.prototype.memoryHighRead = function (address) {
 }
 GameBoyCore.prototype.memoryReadJumpCompile = function () {
 	//Faster in some browsers, since we are doing less conditionals overall by implementing them in advance.
-	for (var index = 0x0000; index <= 0xFFFF; index++) {
+	for (let index = 0x0000; index <= 0xFFFF; index++) {
 		if (index < 0x4000) {
 			this.memoryReader[index] = this.memoryReadNormal;
 		}
@@ -8089,7 +8089,7 @@ GameBoyCore.prototype.memoryHighWrite = function (address, data) {
 }
 GameBoyCore.prototype.memoryWriteJumpCompile = function () {
 	//Faster in some browsers, since we are doing less conditionals overall by implementing them in advance.
-	for (var index = 0x0000; index <= 0xFFFF; index++) {
+	for (let index = 0x0000; index <= 0xFFFF; index++) {
 		if (index < 0x8000) {
 			if (this.cMBC1) {
 				if (index < 0x2000) {
@@ -8458,14 +8458,14 @@ GameBoyCore.prototype.DMAWrite = function (tilesToTransfer) {
 		this.CPUTicks += 4 | ((tilesToTransfer << 5) << this.doubleSpeedShifter);
 	}
 	//Source address of the transfer:
-	var source = (this.memory[0xFF51] << 8) | this.memory[0xFF52];
+	let source = (this.memory[0xFF51] << 8) | this.memory[0xFF52];
 	//Destination address in the VRAM memory range:
-	var destination = (this.memory[0xFF53] << 8) | this.memory[0xFF54];
+	let destination = (this.memory[0xFF53] << 8) | this.memory[0xFF54];
 	//Creating some references:
-	var memoryReader = this.memoryReader;
+	const memoryReader = this.memoryReader;
 	//JIT the graphics render queue:
 	this.graphicsJIT();
-	var memory = this.memory;
+	const memory = this.memory;
 	//Determining which bank we're working on so we can optimize:
 	if (this.currVRAMBank == 0) {
 		//DMA transfer for VRAM bank 0:
@@ -8515,7 +8515,7 @@ GameBoyCore.prototype.DMAWrite = function (tilesToTransfer) {
 		} while (tilesToTransfer > 0);
 	}
 	else {
-		var VRAM = this.VRAM;
+		const VRAM = this.VRAM;
 		//DMA transfer for VRAM bank 1:
 		do {
 			if (destination < 0x1800) {
@@ -8695,7 +8695,7 @@ GameBoyCore.prototype.registerWriteJumpCompile = function () {
 				parentObj.channel1timeSweep = parentObj.channel1lastTimeSweep;
 				parentObj.channel1Swept = false;
 				//Reload 0xFF12:
-				var nr12 = parentObj.memory[0xFF12];
+				const nr12 = parentObj.memory[0xFF12];
 				parentObj.channel1envelopeVolume = nr12 >> 4;
 				parentObj.channel1OutputLevelCache();
 				parentObj.channel1envelopeSweepsLast = (nr12 & 0x7) - 1;
@@ -8779,7 +8779,7 @@ GameBoyCore.prototype.registerWriteJumpCompile = function () {
 			parentObj.audioJIT();
 			if (data > 0x7F) {
 				//Reload 0xFF17:
-				var nr22 = parentObj.memory[0xFF17];
+				const nr22 = parentObj.memory[0xFF17];
 				parentObj.channel2envelopeVolume = nr22 >> 4;
 				parentObj.channel2OutputLevelCache();
 				parentObj.channel2envelopeSweepsLast = (nr22 & 0x7) - 1;
@@ -8905,7 +8905,7 @@ GameBoyCore.prototype.registerWriteJumpCompile = function () {
 		if (parentObj.soundMasterEnabled) {
 			parentObj.audioJIT();
 			parentObj.channel4FrequencyPeriod = Math.max((data & 0x7) << 4, 8) << (data >> 4);
-			var bitWidth = (data & 0x8);
+			const bitWidth = (data & 0x8);
 			if ((bitWidth == 0x8 && parentObj.channel4BitRange == 0x7FFF) || (bitWidth == 0 && parentObj.channel4BitRange == 0x7F)) {
 				parentObj.channel4lastSampleLookup = 0;
 				parentObj.channel4BitRange = (bitWidth == 0x8) ? 0x7F : 0x7FFF;
@@ -8924,7 +8924,7 @@ GameBoyCore.prototype.registerWriteJumpCompile = function () {
 			parentObj.memory[0xFF23] = data;
 			parentObj.channel4consecutive = ((data & 0x40) == 0x0);
 			if (data > 0x7F) {
-				var nr42 = parentObj.memory[0xFF21];
+				const nr42 = parentObj.memory[0xFF21];
 				parentObj.channel4envelopeVolume = nr42 >> 4;
 				parentObj.channel4currentVolume = parentObj.channel4envelopeVolume << parentObj.channel4VolumeShifter;
 				parentObj.channel4envelopeSweepsLast = (nr42 & 0x7) - 1;
@@ -8979,7 +8979,7 @@ GameBoyCore.prototype.registerWriteJumpCompile = function () {
 			parentObj.memory[0xFF26] = 0;
 			parentObj.soundMasterEnabled = false;
 			//GBDev wiki says the registers are written with zeros on power off:
-			for (var index = 0xFF10; index < 0xFF26; index++) {
+			for (let index = 0xFF10; index < 0xFF26; index++) {
 				parentObj.memoryWriter[index](parentObj, index, 0);
 			}
 		}
@@ -9130,7 +9130,7 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 		this.memoryHighWriter[0x40] = this.memoryWriter[0xFF40] = function (parentObj, address, data) {
 			if (parentObj.memory[0xFF40] != data) {
 				parentObj.midScanLineJIT();
-				var temp_var = (data > 0x7F);
+				const temp_var = (data > 0x7F);
 				if (temp_var != parentObj.LCDisOn) {
 					//When the display mode changes...
 					parentObj.LCDisOn = temp_var;
@@ -9172,9 +9172,9 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 			if (data < 0xE0) {
 				data <<= 8;
 				address = 0xFE00;
-				var stat = parentObj.modeSTAT;
+				const stat = parentObj.modeSTAT;
 				parentObj.modeSTAT = 0;
-				var newData = 0;
+				let newData = 0;
 				do {
 					newData = parentObj.memoryReader[data](parentObj, data++);
 					if (newData != parentObj.memory[address]) {
@@ -9260,7 +9260,7 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 		this.memoryHighWriter[0x69] = this.memoryWriter[0xFF69] = function (parentObj, address, data) {
 			parentObj.updateGBCBGPalette(parentObj.memory[0xFF68] & 0x3F, data);
 			if (parentObj.memory[0xFF68] > 0x7F) { // high bit = autoincrement
-				var next = ((parentObj.memory[0xFF68] + 1) & 0x3F);
+				const next = ((parentObj.memory[0xFF68] + 1) & 0x3F);
 				parentObj.memory[0xFF68] = (next | 0x80);
 				parentObj.memory[0xFF69] = parentObj.gbcBGRawPalette[next];
 			}
@@ -9275,7 +9275,7 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 		this.memoryHighWriter[0x6B] = this.memoryWriter[0xFF6B] = function (parentObj, address, data) {
 			parentObj.updateGBCOBJPalette(parentObj.memory[0xFF6A] & 0x3F, data);
 			if (parentObj.memory[0xFF6A] > 0x7F) { // high bit = autoincrement
-				var next = ((parentObj.memory[0xFF6A] + 1) & 0x3F);
+				const next = ((parentObj.memory[0xFF6A] + 1) & 0x3F);
 				parentObj.memory[0xFF6A] = (next | 0x80);
 				parentObj.memory[0xFF6B] = parentObj.gbcOBJRawPalette[next];
 			}
@@ -9285,7 +9285,7 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 		}
 		//SVBK
 		this.memoryHighWriter[0x70] = this.memoryWriter[0xFF70] = function (parentObj, address, data) {
-			var addressCheck = (parentObj.memory[0xFF51] << 8) | parentObj.memory[0xFF52];	//Cannot change the RAM bank while WRAM is the source of a running HDMA.
+			const addressCheck = (parentObj.memory[0xFF51] << 8) | parentObj.memory[0xFF52];	//Cannot change the RAM bank while WRAM is the source of a running HDMA.
 			if (!parentObj.hdmaRunning || addressCheck < 0xD000 || addressCheck >= 0xE000) {
 				parentObj.gbcRamBank = Math.max(data & 0x07, 1);	//Bank range is from 1-7
 				parentObj.gbcRamBankPosition = ((parentObj.gbcRamBank - 1) << 12) - 0xD000;
@@ -9316,7 +9316,7 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 		this.memoryHighWriter[0x40] = this.memoryWriter[0xFF40] = function (parentObj, address, data) {
 			if (parentObj.memory[0xFF40] != data) {
 				parentObj.midScanLineJIT();
-				var temp_var = (data > 0x7F);
+				const temp_var = (data > 0x7F);
 				if (temp_var != parentObj.LCDisOn) {
 					//When the display mode changes...
 					parentObj.LCDisOn = temp_var;
@@ -9361,9 +9361,9 @@ GameBoyCore.prototype.recompileModelSpecificIOWriteHandling = function () {
 			if (data > 0x7F && data < 0xE0) {	//DMG cannot DMA from the ROM banks.
 				data <<= 8;
 				address = 0xFE00;
-				var stat = parentObj.modeSTAT;
+				const stat = parentObj.modeSTAT;
 				parentObj.modeSTAT = 0;
-				var newData = 0;
+				let newData = 0;
 				do {
 					newData = parentObj.memoryReader[data](parentObj, data++);
 					if (newData != parentObj.memory[address]) {
@@ -9459,7 +9459,7 @@ GameBoyCore.prototype.toTypedArray = function (baseArray, memtype) {
 		if (!baseArray || !baseArray.length) {
 			return [];
 		}
-		var length = baseArray.length;
+		const length = baseArray.length;
 		switch (memtype) {
 			case "uint8":
 				var typedArrayTemp = new Uint8Array(length);
@@ -9473,7 +9473,7 @@ GameBoyCore.prototype.toTypedArray = function (baseArray, memtype) {
 			case "float32":
 				var typedArrayTemp = new Float32Array(length);
 		}
-		for (var index = 0; index < length; index++) {
+		for (let index = 0; index < length; index++) {
 			typedArrayTemp[index] = baseArray[index];
 		}
 		return typedArrayTemp;
@@ -9488,8 +9488,8 @@ GameBoyCore.prototype.fromTypedArray = function (baseArray) {
 		if (!baseArray || !baseArray.length) {
 			return [];
 		}
-		var arrayTemp = [];
-		for (var index = 0; index < baseArray.length; ++index) {
+		const arrayTemp = [];
+		for (let index = 0; index < baseArray.length; ++index) {
 			arrayTemp[index] = baseArray[index];
 		}
 		return arrayTemp;
