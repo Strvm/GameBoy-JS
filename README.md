@@ -24,7 +24,13 @@ This project has the ability to "spawn" 3D objects (.GLB files) into the scene w
  - **array**: The array in which those models should be stored in. Later used to move those specific models.
  - **scene**: The scene in which the model should be spawned in.
 
-This project comes with multiple pre-defined 3D models, the GameBoy and the MarioLand game cartridge were the only original one, others were found on [Google Poly's]([https://poly.google.com/](https://poly.google.com/)). The GameBoy and cartridge were made on Blender. 
+This project comes with multiple pre-defined 3D models, the GameBoy and the MarioLand game cartridge were the only original one. 
+
+![GameBoy Model](https://lh3.googleusercontent.com/Ba-V20drCbrZKiz4NBV2wJD7A2Mm--CMkoGIYW9YABnHYr2nwjh2UXPXcGhOs_LrR2gucK7pDbZrOVGOSiHkfL1yttnNToeZ_gtRFFVGlNJxrpNASsiBVVX3NpN5an4viRymW8FIH3uZT6EhfwmAmaw7p595c6TNz7MFmip1Ku15YfkbPYfLKj4eyp0kVJMnBo4ZrjvMCvU4MJ491PH_zOCXxbf-r9yXFDwdHBX0mFsZTqWQ_C-4X_9z9xIO0KOFJjvbVjXSqHtOEYuBbsxlTSri_5K4cfHxOx_hMnO3Urg4YvGXEOksJkki-wl26StQDaXOFJ_QnlLJPGZ5g2XWlOe3C8B9ekdLJPyu_g-YCPDkuNt_jKPcsErBppCiRGB2_EeQ7uGej9kuN18X4n8NTfFfJFJBeImpzTwjfZJWOhjItBSZzddUwU8VHR9X45QpRR6tCdKRSvY7g_J3Ws6Koh8uo4T1eX6YWiN5tGwDWcsAeMJMBaojKOzhPMdz32fotdeUU-WKc7isWXCnmaH8fDBWoyaaDdmrEbHKNn3EASWciUlZrARJ2-Z3DCxa-llEUTgmtxERsaQ6c_Vjvq7c8RsX4QutcTUwQpSdVwK7OND3eeR7B53y-KPm3eSri-jS8gLM1snRplgvvckOPXsLN4FsDwhEHNVp3iaoYL4n-kmNuh6BZLb9TdlX3nGajw=w1920-h1080-no?authuser=0)
+
+![Cartridge](https://lh3.googleusercontent.com/XQbd-SOPhh3QgYB0wa20oMuLzKLUazThRth8qGWf-K5Dw5v8jQk4pYe3yNa502WLmco6iPh4T_z0wONjmo3Pc5B2wUbKbPsbNJwo5i9YiIGjDFi90AEennSuReoR8hOQmhP2VVxsda4OF4JEyw1lUpnyEgfsWTzBFAi_1E2uMfOxHf2VnbsY6K_7e4YWUV32vIgc689W5IJ4HrlMXBPfqIvY7SX5cSBo2VQU8BXQFJCCA5soDXHs8Cd1khErMStLeRFeT_r8H-uhrV9jzclhJyqfaHV9gCrMo17lv1iDUDp9q57c07wYyxuxPayzr9rZ7oZAGN3kemKhaZ7qwfL44_jKTo9Gv1zz9S4eEsXfHY0irqd1yOmJ7tukCDTL1xO_DWc7SnyH8QiwYi1lgFphYIz814jJRxZfhniedstYU4jJG48Qr2O7krqg1yvwsg4Wr3yQbAW2aVmRRECaoFsePVi8j0XH3yrn1xEPiS1d0SnUevd1AhK6Bb6ukW4hdIRfn170sAecrVHxL1yZBCNaQ1lUBGgFUlt7cYwwBhXM-B_sMUcfy939-KRgyKUkU6uDmSBmkGfiW-dLSz9-cHc2nLj0j7WNjdSc7OS2znqb9dl66Uy9VDQraiOsIH5Jw-exbEygv9AxIVJ_pjFKvIt4rZF5adHMhaesqs8D-AznOKKYKsdgaP1F6Z_UzU1tDg=w1920-h1080-no?authuser=0)
+
+Other models were found on [Google Poly's]([https://poly.google.com/](https://poly.google.com/)). The GameBoy and cartridge were made on Blender. 
 
 ### Customization
 With this emulator you are granted the ability to customize gameplay and graphics settings through the menu that can be accessed through the menu button on the top right of the screen. Those are settings you can modify:
