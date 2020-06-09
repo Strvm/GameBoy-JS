@@ -1,25 +1,28 @@
-
-
-
-var camera, scene, renderer, stats;
-var geometry, material, mesh, controls;
+let camera, scene, renderer, stats;
+let geometry, material, mesh, controls;
 let screen = [];
 let screenCanvas;
 let screenTexture;
 let number = 0;
 let group;
-let cartridge;
 let x2;
 let xc2;
 let screenGeometry;
 let GameBoyMesh;
 let models = [];
+let objectSpeed = 8;
 let plants = [];
 let goombat = [];
 let questionBox = [];
 let tube = [];
 let brick = [];
 let light = new THREE.PointLight(0xffffff, 1.1, 500, 1);
+
+
+// Instantiating GLTF load and Draco loader.
+const loader = new THREE.GLTFLoader();
+loader.setDRACOLoader( new THREE.DRACOLoader());
+
 function init() {
     camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.01, 10 );
     camera.position.z = 1;
@@ -33,7 +36,6 @@ function init() {
 
     //scene.background = new THREE.Color( 0x687a8f );
      group = new THREE.Group();
-
 
 
 
@@ -79,9 +81,7 @@ function init() {
 
 
 
-    // Instantiating GLTF load and Draco loader.
-    var loader = new THREE.GLTFLoader();
-    loader.setDRACOLoader( new THREE.DRACOLoader() );
+
     // Load a glTF resource
     loader.load(
         // resource URL
@@ -206,7 +206,7 @@ window.addEventListener('resize', () => {
 
 
 function update() {
-   setInterval(function(){
+   setTimeout(function(){
        if (movingBackground) {
            for (const modelArray of models) {
                for (const model of modelArray) {
@@ -219,15 +219,14 @@ function update() {
                    (scene.position.y);
                }
            }
+           update();
        }
-        }, 8);
+        }, objectSpeed);
 
 }
 
 
 const spawnPoly = (type, amount, scale, array, scene) => {
-    var loader = new THREE.GLTFLoader();
-    loader.setDRACOLoader(new THREE.DRACOLoader());
     for (let i = 0; i < amount; i++) {
         // Load a glTF resource
         loader.load(

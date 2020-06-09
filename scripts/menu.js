@@ -27,6 +27,10 @@ const onMenuChange = (event) => {
         case 'volumeControl':
             volumeControl.gain.value = event.target.value;
             break;
+        case 'objectSpeed':
+            console.log('SPEED');
+            objectSpeed = event.target.value;
+            break;
     }
 
 }
@@ -41,6 +45,10 @@ const menuSetup = () => {
     for (let child of controlers) {
         child.value = eval(child.name);
     }
+
+
+
+
 }
 
 
@@ -53,6 +61,7 @@ for (let controler of controlers) {
     controler.addEventListener('keydown', function(event){
         let newKey = event.key;
         if (newKey.length === 1)newKey = newKey.toUpperCase();
+        sessionStorage.setItem(controler.name, newKey.toLowerCase()); //Saving value in session.
         controler.value = newKey;
         eval(`${controler.name} = '${newKey.toLowerCase()}'`);
     })

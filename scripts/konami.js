@@ -7,11 +7,9 @@ document.body.addEventListener('keydown', function (event) {
         return;
     }
     if (check + 1 === konamiCode.length) {
-        console.log('KONAMI, Super Sudo Bros has appeared!');
-        document.body.style.backgroundImage = 'url("./images/mariobg.gif")';
+        document.body.style.backgroundImage = `url("./images/mariobg.gif")`;
         check = 0;
         return;
     }
-
     check++;
 })

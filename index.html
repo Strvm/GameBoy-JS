@@ -24,13 +24,24 @@
         <label>Right<input type="text" name="JS_KEY_RIGHT" class="menuInput Right_Button"></label>
         <label>Down<input type="text" name="JS_KEY_DOWN" class="menuInput Down_Button"></label>
         <label>Left<input type="text" name="JS_KEY_LEFT" class="menuInput Left_Button"> </label>
+    </div>
+    <div class="graphics">
+        <div class="graphicsChecks">
+            <label>Background Movement<input type="checkbox" class="movingBg" checked></label>
+            <label>Background Objects<input type="checkbox" class="bgObjects" checked></label>
+        </div>
+        <div class="graphicBackground">
+            <label>Objects Speed<input type="range" class="objectSpeed" min="0.1" max="30" value="8" step="0.01"></label>
+            <label>Background<input class='backgroundChanger' type='file'/></label>
+        </div>
+    </div>
+    <div class="otherSettings">
+        <label>Volume<input type="range" class="volumeControl" min="0" max="1" value="0.5" step="0.01"></label>
         <label>FPS<input type="checkbox" class="FPS" checked></label>
     </div>
+
+    <img src="images/Konami_Code.png" alt="Konami Hint" class="konamiImage">
     <div class="closeMenu">X</div>
-    <label>Background Movement<input type="checkbox" class="movingBg" checked></label>
-    <label>Background Objects<input type="checkbox" class="bgObjects" checked></label>
-    <label>Volume<input type="range" class="volumeControl" min="0" max="1" value="0.5" step="0.01"></label>
-    <input class='backgroundChanger' type='file'/>
 </div>
 
 

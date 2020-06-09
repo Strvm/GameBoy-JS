@@ -33,7 +33,6 @@ input[type=file] {
     display: inline-block;
     width: 140px;
     text-align: left;
-    font-family: 'Early GameBoy', sans-serif;
     font-size: 0.6rem;
 }
 
@@ -70,6 +69,15 @@ input[type=file] {
     left: 96%;
 }
 
+.konamiImage{
+    width: 25%;
+    height: 15%;
+    left: 75%;
+    top: 85%;
+    position: absolute;
+    user-select: none;
+}
+
 .controls{
     width: 30%;
     height: 80%;
@@ -78,6 +86,36 @@ input[type=file] {
 .controls input{
     margin: 5px;
 }
+
+.graphics{
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    left: 30%;
+    top: 40%;
+}
+
+
+.otherSettings{
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    left: 30%;
+    top: 70%;
+}
+
+.graphics input{
+    /*margin: 10px;*/
+}
+
+.graphicsChecks, .graphicBackground{
+    margin-bottom: 25px;
+}
+
+.otherSettings{
+    margin-top: 25px;
+}
+
 
 
 
