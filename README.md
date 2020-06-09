@@ -44,7 +44,8 @@ With this emulator you are granted the ability to customize gameplay and graphic
 	 - B Button
 	 - Start Button
 	 - Select Button
- -  FPS Checkbox: wether or not the frames per second display monitor should be displayed or not (default is set to true)
+ - Made keybinds cached in browser session.
+ - FPS Checkbox: wether or not the frames per second display monitor should be displayed or not (default is set to true)
  - Background Movement: wether or not background objects should be moving.
  - Background Objects: Wether or not there should be objects display (other than the GameBoy) displayed in the scene.
  - Volume control: you can modify the sound of the GameBoy.
