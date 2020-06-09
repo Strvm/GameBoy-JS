@@ -70,12 +70,13 @@ input[type=file] {
 }
 
 .konamiImage{
-    width: 25%;
-    height: 15%;
+    width: 35%;
+    height: 25%;
     left: 75%;
-    top: 85%;
+    top: 40%;
     position: absolute;
     user-select: none;
+    transform: rotate(270deg);
 }
 
 .controls{
@@ -92,7 +93,7 @@ input[type=file] {
     height: 80%;
     position: absolute;
     left: 30%;
-    top: 40%;
+    top: 33%;
 }
 
 
@@ -101,12 +102,9 @@ input[type=file] {
     height: 80%;
     position: absolute;
     left: 30%;
-    top: 70%;
+    top: 67%;
 }
 
-.graphics input{
-    /*margin: 10px;*/
-}
 
 .graphicsChecks, .graphicBackground{
     margin-bottom: 25px;
@@ -117,7 +115,14 @@ input[type=file] {
 }
 
 
-
+.githubLogo{
+    width: 8%;
+    height: 9%;
+    border-radius: 50%;
+    position: absolute;
+    top: 90%;
+    left: 45%;
+}
 
 
 .logo{
