@@ -57,4 +57,4 @@ I have modified multiple things inside the source code I forked, those being:
  - Added a volume controller into the AudioContext of the emulator.
  - Changed how controls are managed by no longer checking the deprecated keyCode and using key in the KeyboardEvent.
  - Removed useless KeyBoard check.
- - Replaced over **+500 ** var's to match the correct const or let.
+ - Replaced over **+500** var's to match the correct const or let.
