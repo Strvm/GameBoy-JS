@@ -28,7 +28,7 @@ This project comes with multiple pre-defined 3D models, the GameBoy and the Mari
 
 ![GameBoy Model](https://github.com/Strvm/GameBoy-JS/blob/master/images/GAMEBOY.png)
 
-![Cartridge](https://lh3.googleusercontent.com/XQbd-SOPhh3QgYB0wa20oMuLzKLUazThRth8qGWf-K5Dw5v8jQk4pYe3yNa502WLmco6iPh4T_z0wONjmo3Pc5B2wUbKbPsbNJwo5i9YiIGjDFi90AEennSuReoR8hOQmhP2VVxsda4OF4JEyw1lUpnyEgfsWTzBFAi_1E2uMfOxHf2VnbsY6K_7e4YWUV32vIgc689W5IJ4HrlMXBPfqIvY7SX5cSBo2VQU8BXQFJCCA5soDXHs8Cd1khErMStLeRFeT_r8H-uhrV9jzclhJyqfaHV9gCrMo17lv1iDUDp9q57c07wYyxuxPayzr9rZ7oZAGN3kemKhaZ7qwfL44_jKTo9Gv1zz9S4eEsXfHY0irqd1yOmJ7tukCDTL1xO_DWc7SnyH8QiwYi1lgFphYIz814jJRxZfhniedstYU4jJG48Qr2O7krqg1yvwsg4Wr3yQbAW2aVmRRECaoFsePVi8j0XH3yrn1xEPiS1d0SnUevd1AhK6Bb6ukW4hdIRfn170sAecrVHxL1yZBCNaQ1lUBGgFUlt7cYwwBhXM-B_sMUcfy939-KRgyKUkU6uDmSBmkGfiW-dLSz9-cHc2nLj0j7WNjdSc7OS2znqb9dl66Uy9VDQraiOsIH5Jw-exbEygv9AxIVJ_pjFKvIt4rZF5adHMhaesqs8D-AznOKKYKsdgaP1F6Z_UzU1tDg=w1920-h1080-no?authuser=0)
+![GameBoy Cartridge](https://github.com/Strvm/GameBoy-JS/blob/master/images/game.png)
 
 Other models were found on [Google Poly's]([https://poly.google.com/](https://poly.google.com/)). The GameBoy and cartridge were made on Blender. 
 
