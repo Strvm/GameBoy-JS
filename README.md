@@ -42,3 +42,11 @@ With this emulator you are granted the ability to customize gameplay and graphic
  - Volume control: you can modify the sound of the GameBoy.
  - Background changer: upload an image of your choice to display it as the new background.
 
+### Modified version of emulator
+I have modified multiple things inside the source code I forked, those being:
+
+ - Added compability to emulator to work with ThreeJS CanvasTexture and update it everytime something is drawn on the screen canvas.
+ - Added a volume controller into the AudioContext of the emulator.
+ - Changed how controls are managed by no longer checking the deprecated keyCode and using key in the KeyboardEvent.
+ - Removed useless KeyBoard check.
+ - Replaced over **+500 ** var's to match the correct const or let.
