@@ -105,6 +105,11 @@ input[type=file] {
     top: 67%;
 }
 
+img{
+    /*Only works in Webkit browers*/
+    -webkit-user-drag: none;
+}
+
 
 .graphicsChecks, .graphicBackground{
     margin-bottom: 25px;
