@@ -24,6 +24,8 @@ This project has the ability to "spawn" 3D objects (.GLB files) into the scene w
  - **array**: The array in which those models should be stored in. Later used to move those specific models.
  - **scene**: The scene in which the model should be spawned in.
 
+This project comes with multiple pre-defined 3D models, the GameBoy and the MarioLand game cartridge were the only original one, others were found on [Google Poly's]([https://poly.google.com/](https://poly.google.com/)). The GameBoy and cartridge were made on Blender. 
+
 ### Customization
 With this emulator you are granted the ability to customize gameplay and graphics settings through the menu that can be accessed through the menu button on the top right of the screen. Those are settings you can modify:
 
