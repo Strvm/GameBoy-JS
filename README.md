@@ -58,3 +58,7 @@ I have modified multiple things inside the source code I forked, those being:
  - Changed how controls are managed by no longer checking the deprecated keyCode and using key in the KeyboardEvent.
  - Removed useless KeyBoard check.
  - Replaced over **+500** var's to match the correct const or let.
+
+### Other Stuff
+
+ - KONAMI! Meet Super Sudo Bros!
