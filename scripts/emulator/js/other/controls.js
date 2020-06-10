@@ -1,18 +1,17 @@
-let JS_KEY_UP = sessionStorage.getItem('JS_KEY_UP') || 'ArrowUp';
-let JS_KEY_LEFT = sessionStorage.getItem('JS_KEY_LEFT') || 'ArrowLeft';
-let JS_KEY_RIGHT = sessionStorage.getItem('JS_KEY_RIGHT') || 'ArrowRight';
-let JS_KEY_DOWN = sessionStorage.getItem('JS_KEY_DOWN') || 'ArrowDown';
-let JS_KEY_ENTER = sessionStorage.getItem('JS_KEY_ENTER') || 'Enter';
-let JS_KEY_SHIFT = sessionStorage.getItem('JS_KEY_SHIFT') || 'Shift';
+let JS_KEY_UP = localStorage.getItem('JS_KEY_UP') || 'ArrowUp';
+let JS_KEY_LEFT = localStorage.getItem('JS_KEY_LEFT') || 'ArrowLeft';
+let JS_KEY_RIGHT = localStorage.getItem('JS_KEY_RIGHT') || 'ArrowRight';
+let JS_KEY_DOWN = localStorage.getItem('JS_KEY_DOWN') || 'ArrowDown';
+let JS_KEY_ENTER = localStorage.getItem('JS_KEY_ENTER') || 'Enter';
+let JS_KEY_SHIFT = localStorage.getItem('JS_KEY_SHIFT') || 'Shift';
 
-let JS_KEY_A = sessionStorage.getItem('JS_KEY_A') || 'a';
-let JS_KEY_B = sessionStorage.getItem('JS_KEY_B') || 'b';
+let JS_KEY_A = localStorage.getItem('JS_KEY_A') || 'a';
+let JS_KEY_B = localStorage.getItem('JS_KEY_B') || 'b';
 
 const DEADZONE = 0.1;
 
 let isTouchEnabled = "ontouchstart" in document.documentElement;
 isTouchEnabled = true;
-
 
 
 function bindButton(el, code) {

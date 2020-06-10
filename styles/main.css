@@ -8,8 +8,6 @@ body{
     background-size: 100% 745px;
     position: fixed;
 }
-
-
 label {
     display: inline-block;
     width: 140px;
@@ -18,8 +16,6 @@ label {
     font-size: 0.8rem;
     margin: 4px;
     margin-left: 5px;
-
-
 }
 input[type=text] {
     display: inline-block;
@@ -28,16 +24,12 @@ input[type=text] {
     font-family: 'Early GameBoy', sans-serif;
     font-size: 0.6rem;
 }
-
 input[type=file] {
     display: inline-block;
     width: 140px;
     text-align: left;
     font-size: 0.6rem;
 }
-
-
-
 .closeMenu{
     position: absolute;
     top: 5%;
@@ -46,7 +38,6 @@ input[type=file] {
     font-size: 1.5rem;
     user-select: none;
 }
-
 .settings{
     border-radius: 10px;
     position: absolute;
@@ -58,36 +49,21 @@ input[type=file] {
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: #BFC3AB;
-
 }
-
 .settingsButton{
-    height: 5%;
-    width: 3%;
+    height: 8.5%;
+    width: 5%;
     position: absolute;
     top: 2%;
-    left: 96%;
+    left: 94%;
 }
-
-.konamiImage{
-    width: 35%;
-    height: 25%;
-    left: 75%;
-    top: 40%;
-    position: absolute;
-    user-select: none;
-    transform: rotate(270deg);
-}
-
 .controls{
     width: 30%;
     height: 80%;
 }
-
 .controls input{
     margin: 5px;
 }
-
 .graphics{
     width: 50%;
     height: 80%;
@@ -95,8 +71,6 @@ input[type=file] {
     left: 30%;
     top: 33%;
 }
-
-
 .otherSettings{
     width: 50%;
     height: 80%;
@@ -104,32 +78,33 @@ input[type=file] {
     left: 30%;
     top: 67%;
 }
-
 img{
     /*Only works in Webkit browers*/
     -webkit-user-drag: none;
 }
-
-
 .graphicsChecks, .graphicBackground{
     margin-bottom: 25px;
 }
-
 .otherSettings{
     margin-top: 25px;
 }
-
-
 .githubLogo{
     width: 8%;
     height: 9%;
     border-radius: 50%;
     position: absolute;
-    top: 90%;
-    left: 45%;
+    left: 85%;
+    top: 50%;
 }
+.konamiImage{
+    width: 25%;
+    height: 15%;
+    top: 85%;
+    left: 38.5%;
 
-
+    position: absolute;
+    user-select: none;
+}
 .logo{
     width: 25%;
     height: 25%;
@@ -139,13 +114,10 @@ img{
     transform: translate(-50%, -50%);
     user-select: none;
 }
-
 @font-face {
     font-family: 'Early GameBoy';
-    src: url('./fonts/Early-GameBoy.woff2') format('woff2'),
-    url('./fonts/Early-GameBoy.woff') format('woff');
+    src: url('./fonts/Early-GameBoy.woff2') format('woff2'), url('./fonts/Early-GameBoy.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
-

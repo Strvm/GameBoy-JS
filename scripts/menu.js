@@ -1,6 +1,6 @@
 const controlers = document.querySelectorAll('.menuInput');
 const menu = document.querySelector('.settings');
-let statsVisible = true
+let statsVisible = true;
 let movingBackground = true;
 let backgroundObjects = true;
 
@@ -19,7 +19,8 @@ const onMenuChange = (event) => {
             statsVisible = !statsVisible;
             break;
         case 'movingBg':
-                movingBackground = !movingBackground;
+            if (!movingBackground)update();
+            movingBackground = !movingBackground;
             break;
         case 'bgObjects':
             backgroundObjects = !backgroundObjects;
@@ -28,7 +29,6 @@ const onMenuChange = (event) => {
             volumeControl.gain.value = event.target.value;
             break;
         case 'objectSpeed':
-            console.log('SPEED');
             objectSpeed = event.target.value;
             break;
     }
@@ -60,10 +60,21 @@ const menuSetup = () => {
 for (let controler of controlers) {
     controler.addEventListener('keydown', function(event){
         let newKey = event.key;
-        if (newKey.length === 1)newKey = newKey.toUpperCase();
-        sessionStorage.setItem(controler.name, newKey.toLowerCase()); //Saving value in session.
+        console.log(newKey);
+        //Check if keybind is already used
+        for (let controler1 of controlers) {
+            if (controler1.value === newKey){
+                controler1.style.color = 'red';
+                console.log('SAME KEYBIND SET');
+                return false;
+            }
+            controler1.style.color = 'black';
+        }
+        //if (newKey.length === 1)newKey = newKey.toUpperCase();
+        localStorage.setItem(controler.name, newKey); //Saving value in session.
         controler.value = newKey;
-        eval(`${controler.name} = '${newKey.toLowerCase()}'`);
+        eval(`${controler.name} = '${newKey}'`);
+
     })
 }
 

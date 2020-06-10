@@ -20,7 +20,8 @@ let light = new THREE.PointLight(0xffffff, 1.1, 500, 1);
 
 
 // Instantiating GLTF load and Draco loader.
-const loader = new THREE.GLTFLoader();
+const manager = new THREE.LoadingManager();
+const loader = new THREE.GLTFLoader(manager);
 loader.setDRACOLoader( new THREE.DRACOLoader());
 
 function init() {
@@ -42,7 +43,8 @@ function init() {
 
 
     renderer = new THREE.WebGLRenderer( {alpha: true  } );
-    renderer.setClearColor(0xffaa00, 1);
+    //renderer.setClearColor(0xffaa00, 1);
+
     stats = createStats();
     document.body.appendChild( stats.domElement );
     screenGeometry = new THREE.PlaneGeometry( 0.38, 0.38, 0.1 );
@@ -96,8 +98,10 @@ function init() {
             GameBoyMesh.height = mesh.height * 12;
             GameBoyMesh.position.y = -0.65;
             GameBoyMesh.position.z = 0.06;
-            console.log('ADDED GAMEBOYYY');
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
             scene.add( GameBoyMesh );
+            renderer.outputEncoding = THREE.sRGBEncoding;
 
 
             // const color = 0xe74c3c;
@@ -216,7 +220,6 @@ function update() {
                        model.position.y -= 0.02;
                        model.rotation.y -= 0.02;
                    }
-                   (scene.position.y);
                }
            }
            update();
@@ -252,6 +255,10 @@ const spawnPoly = (type, amount, scale, array, scene) => {
     }
     models.push(array);
 }
+
+window.onbeforeunload = function () {
+    autoSave();
+};
 
 update();
 init();

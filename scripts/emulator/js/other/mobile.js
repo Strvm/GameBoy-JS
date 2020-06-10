@@ -29,7 +29,6 @@ function loadViaXHR() {
 }
 
 function windowingInitialize() {
-  cout("windowingInitialize() called.", 0);
   mainCanvas = x2;
   window.onunload = autoSave;
   loadViaXHR();
