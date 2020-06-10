@@ -1,4 +1,4 @@
-const canvas = screenCanvas;
+const canvas = x2;
 
 function bindResize() {
   const gameRatio = 128 / 128;

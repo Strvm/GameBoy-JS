@@ -19,7 +19,7 @@ const onMenuChange = (event) => {
             statsVisible = !statsVisible;
             break;
         case 'movingBg':
-            if (!movingBackground)update();
+            if (!movingBackground) update();
             movingBackground = !movingBackground;
             break;
         case 'bgObjects':
@@ -39,16 +39,10 @@ const onMenuChange = (event) => {
 /*
     Sets the current controls in the settings.
 */
-
-
 const menuSetup = () => {
     for (let child of controlers) {
         child.value = eval(child.name);
     }
-
-
-
-
 }
 
 
@@ -56,21 +50,19 @@ const menuSetup = () => {
     Controls editor; Edits controls to the ones you want. Might want to change eval in the future to avoid any
     future security reasons (even though its only taking keyCodes) and to make it "faster".
 */
-
 for (let controler of controlers) {
-    controler.addEventListener('keydown', function(event){
+    controler.addEventListener('keydown', function(event) {
         let newKey = event.key;
         console.log(newKey);
         //Check if keybind is already used
         for (let controler1 of controlers) {
-            if (controler1.value === newKey){
+            if (controler1.value === newKey) {
                 controler1.style.color = 'red';
-                console.log('SAME KEYBIND SET');
+                typeWriter('.clues .sameControl', false, 50);
                 return false;
             }
             controler1.style.color = 'black';
         }
-        //if (newKey.length === 1)newKey = newKey.toUpperCase();
         localStorage.setItem(controler.name, newKey); //Saving value in session.
         controler.value = newKey;
         eval(`${controler.name} = '${newKey}'`);
@@ -79,37 +71,45 @@ for (let controler of controlers) {
 }
 
 
-
-
 /*
     Background Changer
  */
 const file = document.querySelector('.backgroundChanger');
 const reader = new FileReader();
-reader.addEventListener("load", function () {
+reader.addEventListener("load", function() {
     document.body.style.backgroundImage = `url(${reader.result})`;
 }, false);
 
-file.addEventListener('change',function() {
+file.addEventListener('change', function() {
     const image = this.files[0];
-    if(image)reader.readAsDataURL(image);
+    if (image) reader.readAsDataURL(image);
 }, false)
-
-
 
 
 /*
     Open and Close menu.
 */
-document.querySelector('.settingsButton').addEventListener('click', function () {
-    if (window.getComputedStyle(menu,null).getPropertyValue("display") === 'none')
+document.querySelector('.settingsButton').addEventListener('click', function() {
+    if (window.getComputedStyle(menu, null).getPropertyValue("display") === 'none') {
         menu.style.display = 'block';
-    else
+        typeWriter('.clues .menu', false, 50)
+    } else {
         menu.style.display = 'none';
+    }
 })
-menu.querySelector('.closeMenu').addEventListener('mousedown', function () {
+
+
+//Close menu button
+menu.querySelector('.closeMenu').addEventListener('mousedown', function() {
     menu.style.display = 'none';
 })
+
+
+//Konami clue
+menu.querySelector('.konamiImage').addEventListener('click', function() {
+    typeWriter('.clues .konami', false, 50);
+})
+
 
 /*
     Event and Function callers.

@@ -65,3 +65,4 @@ I have modified multiple things inside the source code I forked, those being:
 ### Other Stuff
 
  - KONAMI! Meet Super Sudo Bros!
+ - Type writer effect to display clues and such!
