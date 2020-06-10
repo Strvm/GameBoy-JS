@@ -1,5 +1,7 @@
 # GameBoy-JS!
 
+[Game](https://strvm.github.io/GameBoy-JS/) | [Github](https://github.com/Strvm/GameBoy-JS)
+
 GameBoy-JS is a original GameBoy emulator based JavaScript represented with a 3D GameBoy model made in **Blender** and implemented in the web with the [three.js](https://github.com/mrdoob/three.js/) library. 
 
 The emulator is a fork of the GameBoy emulator "[GameBoy-Online](https://github.com/chrismaltby/GameBoy-Online)" with multiple modifications to make this project work.
